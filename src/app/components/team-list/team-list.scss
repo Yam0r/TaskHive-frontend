@@ -1,0 +1,79 @@
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.list-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.list-link {
+  color: #8E54E9;
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: 500;
+  
+  &:hover { text-decoration: underline; }
+}
+
+.list-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.team-item {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  margin-right: 12px;
+}
+
+.member-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.member-name {
+  color: #f3f4f6;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.member-role {
+  color: #9CA3AF;
+  font-size: 12px;
+}
+
+.member-stats {
+  display: flex;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+
+  .stat-done {
+    color: #22c55e;
+  }
+
+  .stat-progress {
+    color: #00B8D9;
+  }
+}

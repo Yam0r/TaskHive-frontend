@@ -1,0 +1,24 @@
+<div class="list-header">
+  <h3 class="list-title">Команда</h3>
+  <a href="#" class="list-link">Все &rarr;</a>
+</div>
+
+<div class="list-content">
+  <div class="team-item" *ngFor="let member of team">
+    
+    <div class="avatar" [style.backgroundColor]="member.color">
+      {{ member.initials }}
+    </div>
+    
+    <div class="member-info">
+      <span class="member-name">{{ member.name }}</span>
+      <span class="member-role">{{ member.role }}</span>
+    </div>
+    
+    <div class="member-stats">
+      <span class="stat-done" *ngIf="member.done > 0">{{ member.done }} &check;</span>
+      <span class="stat-progress" *ngIf="member.inProgress > 0">{{ member.inProgress }} &half;</span>
+    </div>
+    
+  </div>
+</div>

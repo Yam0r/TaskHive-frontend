@@ -1,0 +1,57 @@
+<div class="login-wrapper">
+  <div class="main-login-card">
+    
+    @if(currentView === 'menu'){
+      <div class="auth-button-space">
+        <button class="auth-buttons" (click)="showLogin()">Login</button>
+        <button class="auth-buttons" (click)="showRegistration()">Register</button>
+      </div>
+    }
+
+    @else if (currentView === 'login') {
+      <div>
+        <h2 class="auth-header">Login</h2>
+        
+        <input-error-state-matcher-example 
+        [control]="loginForm.controls.email" 
+        label="Email"
+        type="email">      
+        </input-error-state-matcher-example>
+
+        <input-error-state-matcher-example 
+        [control]="loginForm.controls.password" 
+        label="Password"
+        type="password">      
+        </input-error-state-matcher-example>
+        
+        <div class="auth-button-space">          
+          <button class="cancel-button" (click)="showMenu()">Cancel</button>
+          <button class="cancel-button" (click)="onSubmit()">Login</button>
+        </div>
+      </div>
+    }
+
+    @else if (currentView === 'register') {
+      <div>
+        <h2 class="auth-header">Register</h2>
+        <input-error-state-matcher-example
+        [control]="loginForm.controls.email" 
+        label="Email"
+        type="email">      
+        </input-error-state-matcher-example>
+
+        <input-error-state-matcher-example 
+        [control]="loginForm.controls.password" 
+        label="Password"
+        type="password">      
+        </input-error-state-matcher-example>
+        <div class="auth-button-space">          
+          <button class="cancel-button" (click)="showMenu()">Cancel</button>
+          <button class="cancel-button" (click)="onSubmit()">Register</button>
+        </div>
+        
+      </div>
+    }
+    
+  </div>
+</div>

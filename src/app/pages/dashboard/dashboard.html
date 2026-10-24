@@ -1,0 +1,59 @@
+<main class="main-content">
+  <app-header></app-header>
+
+  <div class="dashboard-area">
+    <div class="stats-grid">
+      <app-stat-card
+        title="Всего задач"
+        count="{{ stats.totalTasks || 0}}"
+        iconName="adjust"
+        colorType="primary"
+      >
+      </app-stat-card>
+
+      <app-stat-card
+        title="К выполнению"
+        count="{{ stats.notStartedTasks }}"
+        iconName="radio_button_unchecked"
+        colorType="warning"
+      >
+      </app-stat-card>
+
+      <app-stat-card
+        title="В процессе"
+        count="{{ stats.inProgressTasks }}"
+        iconName="tonality"
+        colorType="info"
+      >
+      </app-stat-card>
+
+      <app-stat-card
+        title="Выполнено"
+        count="{{ stats.completedTasks }}"
+        iconName="check_circle_outline"
+        colorType="success"
+      >
+      </app-stat-card>
+    </div>
+
+    <div class="charts-section">
+      <div class="chart-card activity-chart">
+        <app-activity-chart></app-activity-chart>
+      </div>
+
+      <div class="chart-card status-chart">
+        <app-status-chart [stats]="stats"> </app-status-chart>
+      </div>
+    </div>
+  </div>
+
+  <div class="lists-section">
+    <div class="list-card deadlines-card">
+      <app-deadline-list></app-deadline-list>
+    </div>
+
+    <div class="list-card team-card">
+      <app-team-list></app-team-list>
+    </div>
+  </div>
+</main>

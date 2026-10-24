@@ -1,0 +1,31 @@
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.chart-header {
+  margin-bottom: -15px; 
+  z-index: 1; 
+  position: relative;
+}
+
+.chart-title {
+  margin: 0 0 4px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.chart-subtitle {
+  font-size: 13px;
+  color: #9CA3AF;
+}
+
+.chart-container {
+  position: relative;
+  height: 250px; 
+  width: 100%;
+  flex-grow: 1;
+}

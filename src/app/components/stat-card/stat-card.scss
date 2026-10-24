@@ -1,0 +1,64 @@
+.stat-card {
+  background-color: #212936;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.card-title {
+  color: #9CA3AF;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.icon-wrapper {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.primary { background: rgba(142, 84, 233, 0.1); color: #8E54E9; }
+.warning { background: rgba(255, 171, 0, 0.1); color: #FFAB00; }
+.info { background: rgba(0, 184, 217, 0.1); color: #00B8D9; }
+.success { background: rgba(34, 197, 94, 0.1); color: #22c55e; }
+
+.card-count {
+  color: #ffffff;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.card-trend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #22c55e;
+  font-size: 12px;
+  font-weight: 500;
+
+  .trend-icon {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+  }
+}

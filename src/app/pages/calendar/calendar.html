@@ -1,0 +1,103 @@
+<main class="main-content">
+  <div class="header">
+    <app-header title="Календарь"></app-header>
+    <button class="btn-primary" (click)="openEmptyModal()">+ Новая задача</button>
+  </div>
+
+  <div class="calendar-page">
+    <div class="stats-row">
+      <div class="stat-card">
+        <span class="stat-title">Дедлайны в месяце</span>
+        <span class="stat-value">6</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-title">Запланировано встреч</span>
+        <span class="stat-value">0</span>
+      </div>
+    </div>
+
+    <div class="full-calendar-container">
+      <full-calendar [options]="calendarOptions"></full-calendar>
+    </div>
+  </div>
+
+  @if (isModalOpen) {
+  <div class="modal-overlay" (click)="closeModal()">
+    <div class="g-modal-content" (click)="$event.stopPropagation()">
+      
+      <!-- Кнопка закрытия и верхняя панель -->
+      <div class="g-modal-header">
+        <button class="icon-btn" (click)="closeModal()">✕</button>
+      </div>
+      
+      <div class="g-modal-body">
+        <!-- Поле названия -->
+        <div class="g-row title-row">
+          <input 
+            type="text" 
+            class="g-title-input" 
+            placeholder="Добавьте название" 
+            [(ngModel)]="newEventTitle" 
+            autofocus
+          />
+        </div>
+
+        <!-- Разделитель для табов (как на скрине) -->
+        <div class="g-row tabs-row">
+          <button class="g-tab active">Событие</button>
+          <button class="g-tab">Задача</button>
+        </div>
+
+        <!-- Время события -->
+        <div class="g-row info-row">
+          <span class="g-icon">🕒</span>
+          <div class="g-info-text">
+            {{ selectedStartStr | date:'EEEE, d MMMM' }} &nbsp; 
+            <!-- Если есть время, можно выводить его здесь -->
+            <span class="g-time-faint">Весь день или выбранное время</span>
+          </div>
+        </div>
+
+        <!-- Описание / Заметки -->
+        <div class="g-row info-row">
+          <span class="g-icon">≡</span>
+          <textarea 
+            class="g-textarea" 
+            placeholder="Добавьте описание..." 
+            [(ngModel)]="newEventDescription">
+          </textarea>
+        </div>
+
+        <!-- Выбор цвета (оставляем из твоего функционала) -->
+        <div class="g-row info-row">
+          <span class="g-icon">🎨</span>
+          <div class="color-picker">
+            @for (color of availableColors; track color) {
+              <button
+                class="color-btn"
+                [class]="color"
+                [class.active]="selectedColor === color"
+                (click)="selectedColor = color"
+              ></button>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Кнопки действий -->
+      <div class="g-modal-actions">
+        <button class="g-btn-text">Дополнительные параметры</button>
+        <div class="right-actions">
+          @if (isEditMode) {
+            <button class="g-btn-icon" title="Удалить" (click)="deleteEvent()">🗑️</button>
+          }
+          <button class="g-btn-primary" (click)="isEditMode ? updateEvent() : addEvent()">
+            Сохранить
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+}
+</main>

@@ -1,0 +1,29 @@
+.example-full-width {
+  width: 100%;
+}
+
+mat-error{
+  color: rgb(255, 85, 85);
+}
+
+::ng-deep {
+  input.mat-mdc-input-element {
+    color: #ffffff !important;
+  }
+
+  .mdc-floating-label {
+    color: #f3f4f6 !important;
+  }
+
+  .mat-mdc-form-field-hint {
+    color: #9CA3AF !important;
+  }
+
+  .mdc-line-ripple::before {
+    border-bottom-color: rgba(255, 255, 255, 0.3) !important;
+  }
+  
+  .mdc-line-ripple::after {
+    border-bottom-color: #8E54E9 !important;
+  }
+}

@@ -1,0 +1,19 @@
+<div class="stat-card">
+
+  <div class="card-header">
+    <span class="card-title">{{ title | uppercase }}</span>
+    
+    <div class="icon-wrapper" [ngClass]="colorType">
+      <mat-icon>{{ iconName }}</mat-icon>
+    </div>
+  </div>
+
+  <div class="card-count">
+    {{ count }}
+  </div>
+
+  <div class="card-trend" *ngIf="trendText">
+    <mat-icon class="trend-icon">trending_up</mat-icon>
+    <span>{{ trendText }}</span>
+  </div>
+</div>

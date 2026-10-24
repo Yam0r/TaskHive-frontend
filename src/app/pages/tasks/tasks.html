@@ -1,0 +1,61 @@
+<main class="main-content">
+  <app-header title="Мои задачи"></app-header>
+
+  <button class="btn-primary action-btn">+ Новая задача</button>
+
+  <div class="tasks-page">
+    <div class="stats-grid">
+      <app-stat-card title="Всего" [count]="stats.totalTasks || 0" iconName="adjust" colorType="primary"></app-stat-card>
+      <app-stat-card title="К выполнению" [count]="stats.notStartedTasks || 0" iconName="radio_button_unchecked" colorType="warning"></app-stat-card>
+      <app-stat-card title="В процессе" [count]="stats.inProgressTasks || 0" iconName="tonality" colorType="info"></app-stat-card>
+      <app-stat-card title="Готово" [count]="stats.completedTasks || 0" iconName="check_circle_outline" colorType="success"></app-stat-card>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-header">
+        <span class="progress-title">Общий прогресс</span>
+        <span class="progress-percent">{{ progressPercentage }}%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" [style.width.%]="progressPercentage"></div>
+      </div>
+      <div class="progress-footer">
+        {{ stats.completedTasks || 0 }} из {{ stats.totalTasks || 0 }} задач завершено
+      </div>
+    </div>
+
+    <div class="filters-row">
+      <button class="filter-btn" [class.active]="activeFilter === 'ALL'" (click)="applyFilter('ALL')">Все</button>
+      <button class="filter-btn" [class.active]="activeFilter === 'NOT_STARTED'" (click)="applyFilter('NOT_STARTED')">К выполнению</button>
+      <button class="filter-btn" [class.active]="activeFilter === 'IN_PROGRESS'" (click)="applyFilter('IN_PROGRESS')">В процессе</button>
+      <button class="filter-btn" [class.active]="activeFilter === 'COMPLETED'" (click)="applyFilter('COMPLETED')">Готово</button>
+    </div>
+
+    <div class="task-list">
+      @for (task of filteredTasks; track task.id) {
+        <div class="task-card">
+          <div class="task-main">
+            <button class="status-circle" [class.completed]="task.status === 'COMPLETED'"></button>
+            <div class="task-info">
+              <h4 class="task-title" [class.completed-text]="task.status === 'COMPLETED'">
+                {{ task.name }}
+              </h4>
+              <div class="task-meta">
+                <span class="tag">ID: {{ task.id }}</span>
+                <span class="deadline">{{ task.dueDate || 'Без срока' }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="task-actions">
+            <div class="user-avatar">АК</div>
+            <div class="priority-badge high">Высокий</div>
+          </div>
+        </div>
+      } @empty {
+        <div class="empty-state">
+          <p>Задач в этой категории пока нет</p>
+        </div>
+      }
+    </div>
+  </div>
+</main>

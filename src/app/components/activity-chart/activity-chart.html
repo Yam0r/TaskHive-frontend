@@ -1,0 +1,15 @@
+<div class="chart-header">
+  <div class="title-group">
+    <h3 class="chart-title">Активность за неделю</h3>
+    <span class="chart-subtitle">Создано и выполнено задач</span>
+  </div>
+</div>
+
+<div class="chart-container">
+  <!-- Тот самый компонент графика -->
+  <canvas baseChart
+    [data]="barChartData"
+    [options]="barChartOptions"
+    [type]="'bar'">
+  </canvas>
+</div>

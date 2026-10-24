@@ -1,0 +1,20 @@
+<div class="list-header">
+  <h3 class="list-title">Ближайшие дедлайны</h3>
+  <a href="#" class="list-link">Все задачи &rarr;</a>
+</div>
+
+<div class="list-content">
+  <div class="task-item" *ngFor="let task of tasks">
+    
+    <div class="dot" [ngClass]="{'active': task.active}"></div>
+    
+    <div class="task-info">
+      <span class="task-name">{{ task.title }}</span>
+      <span class="task-category">{{ task.category }}</span>
+    </div>
+    
+    <span class="task-date">{{ task.date }}</span>
+    
+    <span class="badge" [ngClass]="task.priority">{{ task.priorityText }}</span>
+  </div>
+</div>

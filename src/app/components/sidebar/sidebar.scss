@@ -1,0 +1,129 @@
+.sidebar-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 72vh;
+  padding: 24px 20px;
+  background-color: #1a222c;
+  color: #ffffff;
+  box-sizing: border-box;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 30px;
+
+  .logo-icon {
+    width: 36px;
+    height: 36px;
+    background: #8E54E9;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  .logo-text {
+    font-size: 20px;
+    font-weight: 600;
+  }
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #212936;
+  padding: 12px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #4776E6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+  }
+
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    .name {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .email {
+      font-size: 12px;
+      color: #9CA3AF;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+}
+
+.nav-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  color: #9CA3AF;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: pointer;
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+  }
+
+  &.active {
+    background-color: #2a2d45; 
+    color: #ffffff;
+    border-left: 3px solid #8E54E9; 
+    
+    mat-icon {
+      color: #8E54E9;
+    }
+  }
+
+  .badge {
+    margin-left: auto;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+  }
+}
+
+.logout {
+  &:hover {
+    color: #ff6b6b;
+  }
+}

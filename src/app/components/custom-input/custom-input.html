@@ -1,0 +1,22 @@
+<mat-form-field class="example-full-width">
+  <mat-label>{{label}}</mat-label>
+
+  <input 
+    matInput 
+    [type]="type"    
+    [formControl]="control" 
+    [errorStateMatcher]="matcher"
+  >
+  
+  <mat-hint>Required field</mat-hint>
+
+  @if (control.hasError('required')) {
+    <mat-error><strong>{{ label }}</strong> field is required</mat-error>
+  }
+  @if (control.hasError('email') && !control.hasError('required')) {
+    <mat-error>Enter a correct email address</mat-error>
+  }
+  @if (control.hasError('minlength') && !control.hasError('required')) {
+    <mat-error>Password must contain at least 8 characters</mat-error>
+  }
+</mat-form-field>
