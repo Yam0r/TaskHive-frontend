@@ -1,20 +1,21 @@
 <div class="list-header">
   <h3 class="list-title">Ближайшие дедлайны</h3>
-  <a href="#" class="list-link">Все задачи &rarr;</a>
+  <a routerLink="/tasks" class="list-link">Все задачи &rarr;</a>
 </div>
 
 <div class="list-content">
-  <div class="task-item" *ngFor="let task of tasks">
-    
-    <div class="dot" [ngClass]="{'active': task.active}"></div>
-    
-    <div class="task-info">
-      <span class="task-name">{{ task.title }}</span>
-      <span class="task-category">{{ task.category }}</span>
+  @for (task of tasks(); track task.id) {
+    <div class="task-item">
+      <div class="dot" [class.active]="task.status === 'IN_PROGRESS'"></div>
+      <div class="task-info">
+        <span class="task-name">{{ task.name }}</span>
+        <span class="task-category">{{ task.description }}</span>
+      </div>
+      <span class="task-date" [class.overdue]="isOverdue(task)">
+        до {{ task.dueDate | date: 'dd.MM' }}
+      </span>
     </div>
-    
-    <span class="task-date">{{ task.date }}</span>
-    
-    <span class="badge" [ngClass]="task.priority">{{ task.priorityText }}</span>
-  </div>
+  } @empty {
+    <p class="task-category">Нет задач с дедлайном 🎉</p>
+  }
 </div>
