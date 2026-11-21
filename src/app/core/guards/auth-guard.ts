@@ -5,7 +5,6 @@ export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   const token = localStorage.getItem('token');
-  console.log('🛡️ AuthGuard проснулся! Токен в хранилище:', token);
   if(token){
     return true;
   } else {

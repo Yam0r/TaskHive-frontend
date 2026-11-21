@@ -39,12 +39,10 @@ export class LoginComponent {
   onSubmit(){
     if (this.loginForm.valid){
       const formData = this.loginForm.getRawValue()
-      console.log("Отправка на бэкенд: ", formData)
 
       this.authService.login(formData)
         .subscribe({
           next: (response: any) => {
-            console.log('Успешный ответ от бэкенда! Токен:', response)
             localStorage.setItem('token', response.token)
             this.router.navigate(['./dashboard'])
           },
