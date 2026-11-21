@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { TasksControllerService } from '../../api/api/tasksController.service';
+import { TasksService } from '../../api/api/tasks.service';
 import { TaskDto } from '../../api/model/taskDto';
 
 @Component({
@@ -12,11 +12,11 @@ import { TaskDto } from '../../api/model/taskDto';
   styleUrl: './deadline-list.scss',
 })
 export class DeadlineListComponent implements OnInit {
-  private taskService = inject(TasksControllerService);
+  private taskService = inject(TasksService);
   tasks = signal<TaskDto[]>([]);
 
   ngOnInit(): void {
-    this.taskService.getMyTasks({ page: 0, size: 100 }).subscribe({
+    this.taskService.getMyTasks(0, 100).subscribe({
       next: (data) => this.tasks.set(this.upcoming(data)),
       error: (err) => console.error('Ошибка загрузки дедлайнов:', err),
     });

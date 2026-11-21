@@ -8,7 +8,7 @@ import { DeadlineListComponent } from "../../components/deadline-list/deadline-l
 import { TeamListComponent } from "../../components/team-list/team-list";
 
 import { TaskStatisticsDto } from '../../api/model/taskStatisticsDto';
-import { TasksControllerService } from '../../api/api/tasksController.service';
+import { TasksService } from '../../api/api/tasks.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -32,7 +32,7 @@ export class DashboardComponent implements OnInit{
     completedTasks: 0
   };
   
-  constructor(private taskService: TasksControllerService){
+  constructor(private taskService: TasksService){
 
   }
 

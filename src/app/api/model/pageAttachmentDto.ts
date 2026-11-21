@@ -1,5 +1,5 @@
 /**
- * OpenAPI definition
+ * OpenAPI
  *
  * 
  *
@@ -15,14 +15,14 @@ import { SortObject } from './sortObject';
 export interface PageAttachmentDto { 
     totalElements?: number;
     totalPages?: number;
-    first?: boolean;
-    pageable?: PageableObject;
-    last?: boolean;
-    numberOfElements?: number;
     size?: number;
     content?: Array<AttachmentDto>;
     number?: number;
     sort?: SortObject;
+    first?: boolean;
+    last?: boolean;
+    numberOfElements?: number;
+    pageable?: PageableObject;
     empty?: boolean;
 }
 

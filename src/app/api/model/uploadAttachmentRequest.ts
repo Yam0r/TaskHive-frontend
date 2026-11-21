@@ -1,5 +1,5 @@
 /**
- * OpenAPI definition
+ * OpenAPI
  *
  * 
  *
@@ -7,10 +7,9 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { EntityModelUser } from './entityModelUser';
 
 
-export interface PagedModelEntityModelUserEmbedded { 
-    users?: Array<EntityModelUser>;
+export interface UploadAttachmentRequest { 
+    file: Blob;
 }
 

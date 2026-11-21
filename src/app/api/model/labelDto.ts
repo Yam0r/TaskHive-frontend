@@ -1,5 +1,5 @@
 /**
- * OpenAPI definition
+ * OpenAPI
  *
  * 
  *

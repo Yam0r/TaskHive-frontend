@@ -1,5 +1,5 @@
 /**
- * OpenAPI definition
+ * OpenAPI
  *
  * 
  *
@@ -10,7 +10,7 @@
 
 
 export interface CreateLabelRequestDto { 
-    name?: string;
+    name: string;
     color?: string;
 }
 

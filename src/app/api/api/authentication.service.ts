@@ -1,5 +1,5 @@
 /**
- * OpenAPI definition
+ * OpenAPI
  *
  * 
  *
@@ -50,18 +50,21 @@ export class AuthenticationService extends BaseService {
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public login(userLoginRequestDto: UserLoginRequestDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/hal+json', context?: HttpContext, transferCache?: boolean}): Observable<UserLoginResponseDto>;
-    public login(userLoginRequestDto: UserLoginRequestDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/hal+json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<UserLoginResponseDto>>;
-    public login(userLoginRequestDto: UserLoginRequestDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/hal+json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<UserLoginResponseDto>>;
-    public login(userLoginRequestDto: UserLoginRequestDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/hal+json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public login(userLoginRequestDto: UserLoginRequestDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<UserLoginResponseDto>;
+    public login(userLoginRequestDto: UserLoginRequestDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<UserLoginResponseDto>>;
+    public login(userLoginRequestDto: UserLoginRequestDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<UserLoginResponseDto>>;
+    public login(userLoginRequestDto: UserLoginRequestDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (userLoginRequestDto === null || userLoginRequestDto === undefined) {
             throw new Error('Required parameter userLoginRequestDto was null or undefined when calling login.');
         }
 
         let localVarHeaders = this.defaultHeaders;
 
+        // authentication (bearerAuth) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('bearerAuth', 'Authorization', localVarHeaders, 'Bearer ');
+
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
-            'application/hal+json'
+            '*/*'
         ]);
         if (localVarHttpHeaderAcceptSelected !== undefined) {
             localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
@@ -117,18 +120,21 @@ export class AuthenticationService extends BaseService {
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public registerUser(userRegistrationRequestDto: UserRegistrationRequestDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/hal+json', context?: HttpContext, transferCache?: boolean}): Observable<UserResponseDto>;
-    public registerUser(userRegistrationRequestDto: UserRegistrationRequestDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/hal+json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<UserResponseDto>>;
-    public registerUser(userRegistrationRequestDto: UserRegistrationRequestDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/hal+json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<UserResponseDto>>;
-    public registerUser(userRegistrationRequestDto: UserRegistrationRequestDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/hal+json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public registerUser(userRegistrationRequestDto: UserRegistrationRequestDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<UserResponseDto>;
+    public registerUser(userRegistrationRequestDto: UserRegistrationRequestDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<UserResponseDto>>;
+    public registerUser(userRegistrationRequestDto: UserRegistrationRequestDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<UserResponseDto>>;
+    public registerUser(userRegistrationRequestDto: UserRegistrationRequestDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (userRegistrationRequestDto === null || userRegistrationRequestDto === undefined) {
             throw new Error('Required parameter userRegistrationRequestDto was null or undefined when calling registerUser.');
         }
 
         let localVarHeaders = this.defaultHeaders;
 
+        // authentication (bearerAuth) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('bearerAuth', 'Authorization', localVarHeaders, 'Bearer ');
+
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
-            'application/hal+json'
+            '*/*'
         ]);
         if (localVarHttpHeaderAcceptSelected !== undefined) {
             localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
