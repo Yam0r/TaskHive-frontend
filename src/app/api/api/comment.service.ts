@@ -1,5 +1,5 @@
 /**
- * OpenAPI definition
+ * TaskHive API
  *
  * 
  *
@@ -17,15 +17,11 @@ import { Observable }                                        from 'rxjs';
 import { OpenApiHttpParams, QueryParamStyle } from '../query.params';
 
 // @ts-ignore
+import { CommentDto } from '../model/commentDto';
+// @ts-ignore
 import { CreateCommentRequestDto } from '../model/createCommentRequestDto';
 // @ts-ignore
-import { EntityModelComment } from '../model/entityModelComment';
-// @ts-ignore
-import { GetCollectionResourceCommentGet200Response } from '../model/getCollectionResourceCommentGet200Response';
-// @ts-ignore
-import { Pageable } from '../model/pageable';
-// @ts-ignore
-import { PagedModelEntityModelComment } from '../model/pagedModelEntityModelComment';
+import { PageCommentDto } from '../model/pageCommentDto';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -44,120 +40,6 @@ export class CommentService extends BaseService {
     }
 
     /**
-     * Get comments for a task
-     * Retrieves all comments associated with a specific task.
-     * @endpoint get /comments
-     * @param taskId 
-     * @param pageable 
-     * @param page Zero-based page index (0..N)
-     * @param size The size of the page to be returned
-     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     * @param options additional options
-     */
-    public getCollectionResourceCommentGet(taskId: number, pageable: Pageable, page?: number, size?: number, sort?: Array<string>, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/hal+json' | 'application/x-spring-data-compact+json' | 'text/uri-list', context?: HttpContext, transferCache?: boolean}): Observable<GetCollectionResourceCommentGet200Response>;
-    public getCollectionResourceCommentGet(taskId: number, pageable: Pageable, page?: number, size?: number, sort?: Array<string>, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/hal+json' | 'application/x-spring-data-compact+json' | 'text/uri-list', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<GetCollectionResourceCommentGet200Response>>;
-    public getCollectionResourceCommentGet(taskId: number, pageable: Pageable, page?: number, size?: number, sort?: Array<string>, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/hal+json' | 'application/x-spring-data-compact+json' | 'text/uri-list', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<GetCollectionResourceCommentGet200Response>>;
-    public getCollectionResourceCommentGet(taskId: number, pageable: Pageable, page?: number, size?: number, sort?: Array<string>, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/hal+json' | 'application/x-spring-data-compact+json' | 'text/uri-list', context?: HttpContext, transferCache?: boolean}): Observable<any> {
-        if (taskId === null || taskId === undefined) {
-            throw new Error('Required parameter taskId was null or undefined when calling getCollectionResourceCommentGet.');
-        }
-        if (pageable === null || pageable === undefined) {
-            throw new Error('Required parameter pageable was null or undefined when calling getCollectionResourceCommentGet.');
-        }
-
-        let localVarQueryParameters = new OpenApiHttpParams(this.encoder);
-
-        localVarQueryParameters = this.addToHttpParams(
-            localVarQueryParameters,
-            'page',
-            <any>page,
-            QueryParamStyle.Form,
-            true,
-        );
-
-
-        localVarQueryParameters = this.addToHttpParams(
-            localVarQueryParameters,
-            'size',
-            <any>size,
-            QueryParamStyle.Form,
-            true,
-        );
-
-
-        localVarQueryParameters = this.addToHttpParams(
-            localVarQueryParameters,
-            'sort',
-            <any>sort,
-            QueryParamStyle.Form,
-            true,
-        );
-
-
-        localVarQueryParameters = this.addToHttpParams(
-            localVarQueryParameters,
-            'taskId',
-            <any>taskId,
-            QueryParamStyle.Form,
-            true,
-        );
-
-
-        localVarQueryParameters = this.addToHttpParams(
-            localVarQueryParameters,
-            'pageable',
-            <any>pageable,
-            QueryParamStyle.Form,
-            true,
-        );
-
-
-        let localVarHeaders = this.defaultHeaders;
-
-        const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
-            'application/hal+json',
-            'application/x-spring-data-compact+json',
-            'text/uri-list'
-        ]);
-        if (localVarHttpHeaderAcceptSelected !== undefined) {
-            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
-        }
-
-        const localVarHttpContext: HttpContext = options?.context ?? new HttpContext();
-
-        const localVarTransferCache: boolean = options?.transferCache ?? true;
-
-
-        let responseType_: 'text' | 'json' | 'blob' = 'json';
-        if (localVarHttpHeaderAcceptSelected) {
-            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
-                responseType_ = 'text';
-            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
-                responseType_ = 'json';
-            } else {
-                responseType_ = 'blob';
-            }
-        }
-
-        let localVarPath = `/comments`;
-        const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<GetCollectionResourceCommentGet200Response>('get', `${basePath}${localVarPath}`,
-            {
-                context: localVarHttpContext,
-                params: localVarQueryParameters.toHttpParams(),
-                responseType: <any>responseType_,
-                ...(withCredentials ? { withCredentials } : {}),
-                headers: localVarHeaders,
-                observe: observe,
-                ...(localVarTransferCache !== undefined ? { transferCache: localVarTransferCache } : {}),
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
      * Add a comment
      * Creates a new comment for a specific task.
      * @endpoint post /comments
@@ -166,18 +48,21 @@ export class CommentService extends BaseService {
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public postCollectionResourceCommentPost(createCommentRequestDto: CreateCommentRequestDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/hal+json', context?: HttpContext, transferCache?: boolean}): Observable<EntityModelComment>;
-    public postCollectionResourceCommentPost(createCommentRequestDto: CreateCommentRequestDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/hal+json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<EntityModelComment>>;
-    public postCollectionResourceCommentPost(createCommentRequestDto: CreateCommentRequestDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/hal+json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<EntityModelComment>>;
-    public postCollectionResourceCommentPost(createCommentRequestDto: CreateCommentRequestDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/hal+json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public addComment(createCommentRequestDto: CreateCommentRequestDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<CommentDto>;
+    public addComment(createCommentRequestDto: CreateCommentRequestDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<CommentDto>>;
+    public addComment(createCommentRequestDto: CreateCommentRequestDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<CommentDto>>;
+    public addComment(createCommentRequestDto: CreateCommentRequestDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (createCommentRequestDto === null || createCommentRequestDto === undefined) {
-            throw new Error('Required parameter createCommentRequestDto was null or undefined when calling postCollectionResourceCommentPost.');
+            throw new Error('Required parameter createCommentRequestDto was null or undefined when calling addComment.');
         }
 
         let localVarHeaders = this.defaultHeaders;
 
+        // authentication (bearerAuth) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('bearerAuth', 'Authorization', localVarHeaders, 'Bearer ');
+
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
-            'application/hal+json'
+            'application/json'
         ]);
         if (localVarHttpHeaderAcceptSelected !== undefined) {
             localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
@@ -210,10 +95,112 @@ export class CommentService extends BaseService {
 
         let localVarPath = `/comments`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<EntityModelComment>('post', `${basePath}${localVarPath}`,
+        return this.httpClient.request<CommentDto>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: createCommentRequestDto,
+                responseType: <any>responseType_,
+                ...(withCredentials ? { withCredentials } : {}),
+                headers: localVarHeaders,
+                observe: observe,
+                ...(localVarTransferCache !== undefined ? { transferCache: localVarTransferCache } : {}),
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Get comments for a task
+     * Retrieves all comments associated with a specific task.
+     * @endpoint get /comments
+     * @param taskId 
+     * @param page Zero-based page index (0..N)
+     * @param size The size of the page to be returned
+     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     * @param options additional options
+     */
+    public getComments(taskId: number, page?: number, size?: number, sort?: Array<string>, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<PageCommentDto>;
+    public getComments(taskId: number, page?: number, size?: number, sort?: Array<string>, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<PageCommentDto>>;
+    public getComments(taskId: number, page?: number, size?: number, sort?: Array<string>, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<PageCommentDto>>;
+    public getComments(taskId: number, page?: number, size?: number, sort?: Array<string>, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (taskId === null || taskId === undefined) {
+            throw new Error('Required parameter taskId was null or undefined when calling getComments.');
+        }
+
+        let localVarQueryParameters = new OpenApiHttpParams(this.encoder);
+
+        localVarQueryParameters = this.addToHttpParams(
+            localVarQueryParameters,
+            'taskId',
+            <any>taskId,
+            QueryParamStyle.Form,
+            true,
+        );
+
+
+        localVarQueryParameters = this.addToHttpParams(
+            localVarQueryParameters,
+            'page',
+            <any>page,
+            QueryParamStyle.Form,
+            true,
+        );
+
+
+        localVarQueryParameters = this.addToHttpParams(
+            localVarQueryParameters,
+            'size',
+            <any>size,
+            QueryParamStyle.Form,
+            true,
+        );
+
+
+        localVarQueryParameters = this.addToHttpParams(
+            localVarQueryParameters,
+            'sort',
+            <any>sort,
+            QueryParamStyle.Form,
+            true,
+        );
+
+
+        let localVarHeaders = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('bearerAuth', 'Authorization', localVarHeaders, 'Bearer ');
+
+        const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
+            'application/json'
+        ]);
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        const localVarHttpContext: HttpContext = options?.context ?? new HttpContext();
+
+        const localVarTransferCache: boolean = options?.transferCache ?? true;
+
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/comments`;
+        const { basePath, withCredentials } = this.configuration;
+        return this.httpClient.request<PageCommentDto>('get', `${basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                params: localVarQueryParameters.toHttpParams(),
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,

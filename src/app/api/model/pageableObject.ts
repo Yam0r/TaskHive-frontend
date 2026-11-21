@@ -1,5 +1,5 @@
 /**
- * OpenAPI definition
+ * TaskHive API
  *
  * 
  *
@@ -11,11 +11,11 @@ import { SortObject } from './sortObject';
 
 
 export interface PageableObject { 
-    paged?: boolean;
-    pageNumber?: number;
-    pageSize?: number;
-    unpaged?: boolean;
     offset?: number;
     sort?: SortObject;
+    unpaged?: boolean;
+    pageNumber?: number;
+    pageSize?: number;
+    paged?: boolean;
 }
 

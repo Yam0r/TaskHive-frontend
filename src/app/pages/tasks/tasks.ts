@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SidebarComponent } from "../../components/sidebar/sidebar";
 import { HeaderComponent } from "../../components/header/header";
 import { StatCardComponent } from "../../components/stat-card/stat-card";
-import { TaskDto, TaskStatisticsDto, TasksControllerService } from '../../api';
+import { TaskDto, TaskStatisticsDto, TasksService } from '../../api';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -25,7 +25,7 @@ export class TasksComponent implements OnInit{
 
   currentDate = new Date(); 
 
-  constructor(private taskService: TasksControllerService){}
+  constructor(private taskService: TasksService){}
   
   ngOnInit(): void {
     this.loadTasks();
@@ -33,7 +33,7 @@ export class TasksComponent implements OnInit{
   }
 
   loadTasks(): void{
-    this.taskService.getMyTasks({page: 0, size: 20}).subscribe({
+    this.taskService.getMyTasks(0, 20).subscribe({
       next: (data) => {
         this.tasks = data;
         this.applyFilter(this.activeFilter);

@@ -1,5 +1,5 @@
 /**
- * OpenAPI definition
+ * TaskHive API
  *
  * 
  *
@@ -10,11 +10,11 @@
 
 
 export interface CreateTaskRequestDto { 
-    name?: string;
+    name: string;
     description?: string;
-    dueDate?: string;
-    assigneeId?: number;
-    projectId?: number;
+    dueDate: string;
+    assigneeId: number;
+    projectId: number;
     labelIds?: Array<number>;
     status?: CreateTaskRequestDto.StatusEnum;
 }

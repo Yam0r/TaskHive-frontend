@@ -1,5 +1,5 @@
 /**
- * OpenAPI definition
+ * TaskHive API
  *
  * 
  *
@@ -11,7 +11,6 @@
 
 export interface CreateCommentRequestDto { 
     taskId: number;
-    userId: number;
     text: string;
     content?: string;
 }

@@ -23,7 +23,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       // 401 on a protected endpoint = token expired or invalid -> log out.
       // 401 from /auth/login is just wrong credentials, the login form handles it.
       const isAuthEndpoint = req.url.startsWith(`${environment.apiUrl}/auth/`);
-      if (error.status === 401 && !isAuthEndpoint) {
+      if (error.status === 401 && token && !isAuthEndpoint) {
         tokenService.clear();
         router.navigate(['/login']);
       }

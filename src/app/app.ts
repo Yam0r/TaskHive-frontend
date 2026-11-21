@@ -13,13 +13,14 @@ export class AppComponent {
   protected readonly title = signal('TaskHive_2.0');
 
   private router = inject(Router);
-   isAuthPage = false
+  
+  isAuthPage = signal(true);
 
    constructor() {
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: any) => {
-      this.isAuthPage = event.urlAfterRedirects.includes('/login');
-    });
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event) => {
+        this.isAuthPage.set(event.urlAfterRedirects.startsWith('/login'));
+      });
   }
 }

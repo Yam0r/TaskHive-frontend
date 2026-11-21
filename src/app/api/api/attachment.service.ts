@@ -1,5 +1,5 @@
 /**
- * OpenAPI definition
+ * TaskHive API
  *
  * 
  *
@@ -17,15 +17,11 @@ import { Observable }                                        from 'rxjs';
 import { OpenApiHttpParams, QueryParamStyle } from '../query.params';
 
 // @ts-ignore
-import { EntityModelAttachment } from '../model/entityModelAttachment';
+import { AttachmentDto } from '../model/attachmentDto';
 // @ts-ignore
-import { GetCollectionResourceAttachmentGet200Response } from '../model/getCollectionResourceAttachmentGet200Response';
+import { PageAttachmentDto } from '../model/pageAttachmentDto';
 // @ts-ignore
-import { Pageable } from '../model/pageable';
-// @ts-ignore
-import { PagedModelEntityModelAttachment } from '../model/pagedModelEntityModelAttachment';
-// @ts-ignore
-import { PostCollectionResourceAttachmentPostRequest } from '../model/postCollectionResourceAttachmentPostRequest';
+import { UploadAttachmentRequest } from '../model/uploadAttachmentRequest';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -48,7 +44,6 @@ export class AttachmentService extends BaseService {
      * Retrieves all attachments associated with a specific task
      * @endpoint get /attachments
      * @param taskId 
-     * @param pageable 
      * @param page Zero-based page index (0..N)
      * @param size The size of the page to be returned
      * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -56,18 +51,24 @@ export class AttachmentService extends BaseService {
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public getCollectionResourceAttachmentGet(taskId: number, pageable: Pageable, page?: number, size?: number, sort?: Array<string>, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/hal+json' | 'application/x-spring-data-compact+json' | 'text/uri-list', context?: HttpContext, transferCache?: boolean}): Observable<GetCollectionResourceAttachmentGet200Response>;
-    public getCollectionResourceAttachmentGet(taskId: number, pageable: Pageable, page?: number, size?: number, sort?: Array<string>, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/hal+json' | 'application/x-spring-data-compact+json' | 'text/uri-list', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<GetCollectionResourceAttachmentGet200Response>>;
-    public getCollectionResourceAttachmentGet(taskId: number, pageable: Pageable, page?: number, size?: number, sort?: Array<string>, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/hal+json' | 'application/x-spring-data-compact+json' | 'text/uri-list', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<GetCollectionResourceAttachmentGet200Response>>;
-    public getCollectionResourceAttachmentGet(taskId: number, pageable: Pageable, page?: number, size?: number, sort?: Array<string>, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/hal+json' | 'application/x-spring-data-compact+json' | 'text/uri-list', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public getAttachmentsForTask(taskId: number, page?: number, size?: number, sort?: Array<string>, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<PageAttachmentDto>;
+    public getAttachmentsForTask(taskId: number, page?: number, size?: number, sort?: Array<string>, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<PageAttachmentDto>>;
+    public getAttachmentsForTask(taskId: number, page?: number, size?: number, sort?: Array<string>, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<PageAttachmentDto>>;
+    public getAttachmentsForTask(taskId: number, page?: number, size?: number, sort?: Array<string>, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (taskId === null || taskId === undefined) {
-            throw new Error('Required parameter taskId was null or undefined when calling getCollectionResourceAttachmentGet.');
-        }
-        if (pageable === null || pageable === undefined) {
-            throw new Error('Required parameter pageable was null or undefined when calling getCollectionResourceAttachmentGet.');
+            throw new Error('Required parameter taskId was null or undefined when calling getAttachmentsForTask.');
         }
 
         let localVarQueryParameters = new OpenApiHttpParams(this.encoder);
+
+        localVarQueryParameters = this.addToHttpParams(
+            localVarQueryParameters,
+            'taskId',
+            <any>taskId,
+            QueryParamStyle.Form,
+            true,
+        );
+
 
         localVarQueryParameters = this.addToHttpParams(
             localVarQueryParameters,
@@ -96,30 +97,13 @@ export class AttachmentService extends BaseService {
         );
 
 
-        localVarQueryParameters = this.addToHttpParams(
-            localVarQueryParameters,
-            'taskId',
-            <any>taskId,
-            QueryParamStyle.Form,
-            true,
-        );
-
-
-        localVarQueryParameters = this.addToHttpParams(
-            localVarQueryParameters,
-            'pageable',
-            <any>pageable,
-            QueryParamStyle.Form,
-            true,
-        );
-
-
         let localVarHeaders = this.defaultHeaders;
 
+        // authentication (bearerAuth) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('bearerAuth', 'Authorization', localVarHeaders, 'Bearer ');
+
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
-            'application/hal+json',
-            'application/x-spring-data-compact+json',
-            'text/uri-list'
+            'application/json'
         ]);
         if (localVarHttpHeaderAcceptSelected !== undefined) {
             localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
@@ -143,7 +127,7 @@ export class AttachmentService extends BaseService {
 
         let localVarPath = `/attachments`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<GetCollectionResourceAttachmentGet200Response>('get', `${basePath}${localVarPath}`,
+        return this.httpClient.request<PageAttachmentDto>('get', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 params: localVarQueryParameters.toHttpParams(),
@@ -162,20 +146,17 @@ export class AttachmentService extends BaseService {
      * Uploads an attachment for a specific task
      * @endpoint post /attachments
      * @param taskId 
-     * @param postCollectionResourceAttachmentPostRequest 
+     * @param uploadAttachmentRequest 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public postCollectionResourceAttachmentPost(taskId: number, postCollectionResourceAttachmentPostRequest: PostCollectionResourceAttachmentPostRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/hal+json', context?: HttpContext, transferCache?: boolean}): Observable<EntityModelAttachment>;
-    public postCollectionResourceAttachmentPost(taskId: number, postCollectionResourceAttachmentPostRequest: PostCollectionResourceAttachmentPostRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/hal+json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<EntityModelAttachment>>;
-    public postCollectionResourceAttachmentPost(taskId: number, postCollectionResourceAttachmentPostRequest: PostCollectionResourceAttachmentPostRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/hal+json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<EntityModelAttachment>>;
-    public postCollectionResourceAttachmentPost(taskId: number, postCollectionResourceAttachmentPostRequest: PostCollectionResourceAttachmentPostRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/hal+json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public uploadAttachment(taskId: number, uploadAttachmentRequest?: UploadAttachmentRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<AttachmentDto>;
+    public uploadAttachment(taskId: number, uploadAttachmentRequest?: UploadAttachmentRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<AttachmentDto>>;
+    public uploadAttachment(taskId: number, uploadAttachmentRequest?: UploadAttachmentRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<AttachmentDto>>;
+    public uploadAttachment(taskId: number, uploadAttachmentRequest?: UploadAttachmentRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (taskId === null || taskId === undefined) {
-            throw new Error('Required parameter taskId was null or undefined when calling postCollectionResourceAttachmentPost.');
-        }
-        if (postCollectionResourceAttachmentPostRequest === null || postCollectionResourceAttachmentPostRequest === undefined) {
-            throw new Error('Required parameter postCollectionResourceAttachmentPostRequest was null or undefined when calling postCollectionResourceAttachmentPost.');
+            throw new Error('Required parameter taskId was null or undefined when calling uploadAttachment.');
         }
 
         let localVarQueryParameters = new OpenApiHttpParams(this.encoder);
@@ -191,8 +172,11 @@ export class AttachmentService extends BaseService {
 
         let localVarHeaders = this.defaultHeaders;
 
+        // authentication (bearerAuth) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('bearerAuth', 'Authorization', localVarHeaders, 'Bearer ');
+
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
-            'application/hal+json'
+            'application/json'
         ]);
         if (localVarHttpHeaderAcceptSelected !== undefined) {
             localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
@@ -225,10 +209,10 @@ export class AttachmentService extends BaseService {
 
         let localVarPath = `/attachments`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<EntityModelAttachment>('post', `${basePath}${localVarPath}`,
+        return this.httpClient.request<AttachmentDto>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: postCollectionResourceAttachmentPostRequest,
+                body: uploadAttachmentRequest,
                 params: localVarQueryParameters.toHttpParams(),
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),

@@ -1,5 +1,5 @@
 /**
- * OpenAPI definition
+ * TaskHive API
  *
  * 
  *
@@ -15,14 +15,14 @@ import { CommentDto } from './commentDto';
 export interface PageCommentDto { 
     totalElements?: number;
     totalPages?: number;
-    first?: boolean;
-    pageable?: PageableObject;
-    last?: boolean;
-    numberOfElements?: number;
     size?: number;
     content?: Array<CommentDto>;
     number?: number;
     sort?: SortObject;
+    first?: boolean;
+    last?: boolean;
+    numberOfElements?: number;
+    pageable?: PageableObject;
     empty?: boolean;
 }
 
