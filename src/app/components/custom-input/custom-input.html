@@ -8,7 +8,9 @@
     [errorStateMatcher]="matcher"
   >
   
-  <mat-hint>Required field</mat-hint>
+  @if (required) {
+    <mat-hint>Required field</mat-hint>
+  }
 
   @if (control.hasError('required')) {
     <mat-error><strong>{{ label }}</strong> field is required</mat-error>
@@ -17,6 +19,9 @@
     <mat-error>Enter a correct email address</mat-error>
   }
   @if (control.hasError('minlength') && !control.hasError('required')) {
-    <mat-error>Password must contain at least 8 characters</mat-error>
+    <mat-error><strong>{{ label }}</strong> must contain at least {{ control.getError('minlength').requiredLength }} characters</mat-error>
+  }
+  @if (control.hasError('maxlength')) {
+    <mat-error><strong>{{ label }}</strong> must be at most {{ control.getError('maxlength').requiredLength }} characters</mat-error>
   }
 </mat-form-field>

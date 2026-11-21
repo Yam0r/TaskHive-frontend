@@ -32,4 +32,5 @@ export class InputErrorStateMatcherExample {
   @Input({required:true}) control!: FormControl;
   @Input({required:true}) label!: string;
   @Input() type: string = 'text';
+  @Input() required = true;
 }

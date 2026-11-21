@@ -12,10 +12,10 @@
 }
 
 .chart-card {
-  background-color: #212936;
+  background-color: var(--color-surface);
   border-radius: 12px;
   padding: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--color-border);
 }
 
 .activity-chart {
@@ -33,10 +33,10 @@
 }
 
 .list-card {
-  background-color: #212936;
+  background-color: var(--color-surface);
   border-radius: 12px;
   padding: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--color-border);
 }
 
 .deadlines-card {

@@ -11,8 +11,8 @@
   position: absolute;
   top: 24px;   
   right: 24px; 
-  background: #8e54e9;
-  color: white;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
   border: none;
   padding: 10px 20px;
   border-radius: 8px;
@@ -29,7 +29,7 @@
 
 .tasks-page {
   padding: 0 24px 24px 24px; 
-  color: #fff;
+  color: var(--color-text);
 }
 
 .stats-grid {
@@ -40,8 +40,8 @@
 }
 
 .progress-section {
-  background-color: #212936; 
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background-color: var(--color-surface); 
+  border: 1px solid var(--color-border);
   padding: 24px;
   border-radius: 12px;
   margin-bottom: 32px;
@@ -50,7 +50,7 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 16px;
-    color: #fff;
+    color: var(--color-text);
     font-size: 14px;
 
     .progress-percent {
@@ -60,21 +60,21 @@
 
   .progress-track {
     height: 8px;
-    background: rgba(255, 255, 255, 0.05); 
+    background: var(--color-hover); 
     border-radius: 4px;
     overflow: hidden;
     margin-bottom: 12px;
 
     .progress-fill {
       height: 100%;
-      background: #8e54e9;
+      background: var(--color-accent);
       border-radius: 4px;
       transition: width 0.5s ease-in-out;
     }
   }
 
   .progress-footer {
-    color: #8b92a5;
+    color: var(--color-text-muted);
     font-size: 13px;
   }
 }
@@ -85,9 +85,9 @@
   margin-bottom: 24px;
 
   .filter-btn {
-    background-color: #212936; 
-    border: 1px solid rgba(255, 255, 255, 0.05); 
-    color: #8b92a5;
+    background-color: var(--color-surface); 
+    border: 1px solid var(--color-border); 
+    color: var(--color-text-muted);
     padding: 8px 16px;
     border-radius: 20px;
     cursor: pointer;
@@ -95,9 +95,9 @@
     transition: all 0.3s ease;
 
     &.active, &:hover {
-      background: #8e54e9;
-      border-color: #8e54e9;
-      color: #fff;
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+      color: var(--color-on-accent);
     }
   }
 }
@@ -111,8 +111,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #212936;
-    border: 1px solid rgba(255, 255, 255, 0.05); 
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border); 
     padding: 16px 20px;
     border-radius: 12px;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -131,19 +131,19 @@
         width: 24px;
         height: 24px;
         border-radius: 50%;
-        border: 2px solid rgba(255, 255, 255, 0.1);
+        border: 2px solid var(--color-border-strong);
         background: transparent;
         cursor: pointer;
         transition: all 0.2s;
         position: relative;
         
         &.completed {
-          background: #8e54e9;
-          border-color: #8e54e9;
+          background: var(--color-accent);
+          border-color: var(--color-accent);
           
           &::after {
             content: '✓';
-            color: white;
+            color: var(--color-on-accent);
             position: absolute;
             top: 50%;
             left: 50%;
@@ -162,11 +162,11 @@
           margin: 0;
           font-size: 15px;
           font-weight: 500;
-          color: #fff;
+          color: var(--color-text);
 
           &.completed-text {
             text-decoration: line-through;
-            color: #8b92a5;
+            color: var(--color-text-muted);
           }
         }
 
@@ -174,11 +174,11 @@
           display: flex;
           gap: 12px;
           font-size: 12px;
-          color: #8b92a5;
+          color: var(--color-text-muted);
           align-items: center;
           
           .tag {
-            background: rgba(255, 255, 255, 0.05); 
+            background: var(--color-hover); 
             padding: 4px 10px;
             border-radius: 6px;
           }
@@ -195,8 +195,8 @@
         width: 32px;
         height: 32px;
         border-radius: 50%;
-        background: rgba(255, 255, 255, 0.1); 
-        color: #fff;
+        background: var(--color-hover-strong); 
+        color: var(--color-text);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -211,9 +211,9 @@
         font-weight: 500;
         
         &.high {
-          color: #ff4757;
-          background: rgba(255, 71, 87, 0.1);
-          border: 1px solid rgba(255, 71, 87, 0.2);
+          color: var(--color-danger);
+          background: var(--color-danger-soft);
+          border: 1px solid var(--color-danger-border);
         }
       }
     }
@@ -222,9 +222,9 @@
   .empty-state {
     text-align: center;
     padding: 40px;
-    color: #8b92a5;
-    background-color: #212936; 
-    border: 1px solid rgba(255, 255, 255, 0.05); 
+    color: var(--color-text-muted);
+    background-color: var(--color-surface); 
+    border: 1px solid var(--color-border); 
     border-radius: 12px;
   }
 }

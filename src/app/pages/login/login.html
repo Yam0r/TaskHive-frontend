@@ -1,57 +1,99 @@
 <div class="login-wrapper">
   <div class="main-login-card">
-    
-    @if(currentView === 'menu'){
+
+    @if (currentView === 'menu') {
       <div class="auth-button-space">
-        <button class="auth-buttons" (click)="showLogin()">Login</button>
-        <button class="auth-buttons" (click)="showRegistration()">Register</button>
+        <button class="auth-buttons" type="button" (click)="showLogin()">Login</button>
+        <button class="auth-buttons" type="button" (click)="showRegistration()">Register</button>
       </div>
     }
 
     @else if (currentView === 'login') {
-      <div>
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()" novalidate>
         <h2 class="auth-header">Login</h2>
-        
-        <input-error-state-matcher-example 
-        [control]="loginForm.controls.email" 
-        label="Email"
-        type="email">      
+
+        <input-error-state-matcher-example
+          [control]="loginForm.controls.email"
+          label="Email"
+          type="email">
         </input-error-state-matcher-example>
 
-        <input-error-state-matcher-example 
-        [control]="loginForm.controls.password" 
-        label="Password"
-        type="password">      
+        <input-error-state-matcher-example
+          [control]="loginForm.controls.password"
+          label="Password"
+          type="password">
         </input-error-state-matcher-example>
-        
-        <div class="auth-button-space">          
-          <button class="cancel-button" (click)="showMenu()">Cancel</button>
-          <button class="cancel-button" (click)="onSubmit()">Login</button>
+
+        @for (message of errorMessages(); track message) {
+          <p class="form-error" role="alert">{{ message }}</p>
+        }
+
+        <div class="auth-button-space">
+          <button class="cancel-button" type="button" (click)="showMenu()">Cancel</button>
+          <button class="cancel-button" type="submit" [disabled]="loading()">
+            {{ loading() ? 'Signing in…' : 'Login' }}
+          </button>
         </div>
-      </div>
+      </form>
     }
 
     @else if (currentView === 'register') {
-      <div>
+      <form [formGroup]="registerForm" (ngSubmit)="onRegister()" novalidate>
         <h2 class="auth-header">Register</h2>
+
         <input-error-state-matcher-example
-        [control]="loginForm.controls.email" 
-        label="Email"
-        type="email">      
+          [control]="registerForm.controls.email"
+          label="Email"
+          type="email">
         </input-error-state-matcher-example>
 
-        <input-error-state-matcher-example 
-        [control]="loginForm.controls.password" 
-        label="Password"
-        type="password">      
+        <input-error-state-matcher-example
+          [control]="registerForm.controls.username"
+          label="Username">
         </input-error-state-matcher-example>
-        <div class="auth-button-space">          
-          <button class="cancel-button" (click)="showMenu()">Cancel</button>
-          <button class="cancel-button" (click)="onSubmit()">Register</button>
+
+        <div class="name-row">
+          <input-error-state-matcher-example
+            [control]="registerForm.controls.firstName"
+            label="First name"
+            [required]="false">
+          </input-error-state-matcher-example>
+
+          <input-error-state-matcher-example
+            [control]="registerForm.controls.lastName"
+            label="Last name"
+            [required]="false">
+          </input-error-state-matcher-example>
         </div>
-        
-      </div>
+
+        <input-error-state-matcher-example
+          [control]="registerForm.controls.password"
+          label="Password"
+          type="password">
+        </input-error-state-matcher-example>
+
+        <input-error-state-matcher-example
+          [control]="registerForm.controls.repeatPassword"
+          label="Repeat password"
+          type="password">
+        </input-error-state-matcher-example>
+
+        @if (registerForm.hasError('passwordMismatch') && registerForm.controls.repeatPassword.touched) {
+          <p class="form-error" role="alert">Passwords do not match.</p>
+        }
+
+        @for (message of errorMessages(); track message) {
+          <p class="form-error" role="alert">{{ message }}</p>
+        }
+
+        <div class="auth-button-space">
+          <button class="cancel-button" type="button" (click)="showMenu()">Cancel</button>
+          <button class="cancel-button" type="submit" [disabled]="loading()">
+            {{ loading() ? 'Creating account…' : 'Register' }}
+          </button>
+        </div>
+      </form>
     }
-    
+
   </div>
 </div>

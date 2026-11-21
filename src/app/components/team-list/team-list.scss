@@ -9,11 +9,11 @@
   margin: 0;
   font-size: 16px;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--color-text);
 }
 
 .list-link {
-  color: #8E54E9;
+  color: var(--color-accent);
   font-size: 14px;
   text-decoration: none;
   font-weight: 500;
@@ -39,7 +39,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #ffffff;
+  color: var(--color-on-accent);
   font-size: 13px;
   font-weight: 600;
   margin-right: 12px;
@@ -52,14 +52,14 @@
 }
 
 .member-name {
-  color: #f3f4f6;
+  color: var(--color-text-secondary);
   font-size: 14px;
   font-weight: 500;
   margin-bottom: 2px;
 }
 
 .member-role {
-  color: #9CA3AF;
+  color: var(--color-text-muted);
   font-size: 12px;
 }
 
@@ -70,10 +70,10 @@
   font-weight: 500;
 
   .stat-done {
-    color: #22c55e;
+    color: var(--color-success);
   }
 
   .stat-progress {
-    color: #00B8D9;
+    color: var(--color-info);
   }
 }

@@ -1,0 +1,53 @@
+// FullCalendar renders its own DOM, so its overrides must be global (component styles don't reach it).
+
+:root {
+  --fc-monarch-background: transparent !important;
+  --fc-monarch-popover: var(--color-surface) !important;
+  --fc-monarch-foreground: var(--color-text) !important;
+  --fc-monarch-muted-foreground: var(--color-text-muted) !important;
+  --fc-monarch-faint-foreground: var(--color-text-faint) !important;
+  --fc-monarch-primary: var(--color-accent) !important;
+  --fc-monarch-primary-foreground: var(--color-on-accent) !important;
+  --fc-monarch-border: var(--color-border) !important;
+  --fc-monarch-strong-border: var(--color-border-strong) !important;
+  --fc-monarch-selected: var(--color-accent) !important;
+  --fc-monarch-selected-foreground: var(--color-on-accent) !important;
+  --fc-monarch-event: var(--color-accent) !important;
+  --fc-monarch-event-contrast: var(--color-on-accent) !important;
+  --fc-monarch-highlight: var(--color-accent-soft) !important;
+  --fc-monarch-now: var(--color-danger) !important;
+  // today's date marker
+  --fc-monarch-tertiary: var(--color-accent) !important;
+  --fc-monarch-tertiary-foreground: var(--color-on-accent) !important;
+}
+
+.fc-theme-monarch .fc-scrollgrid,
+.fc-theme-monarch .fc-view,
+.fc-theme-monarch td,
+.fc-theme-monarch th,
+.fc-daygrid-day-frame {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+.fc-col-header-cell { padding: 12px 0 !important; font-weight: 500; }
+.fc-col-header-cell-cushion,
+.fc-daygrid-day-number,
+.fc-toolbar-title { color: var(--color-text) !important; text-decoration: none !important; }
+
+.fc-button-primary {
+  background-color: var(--color-accent-soft) !important; border-color: var(--color-accent-border) !important;
+  color: var(--color-text) !important; text-transform: capitalize !important;
+  &:hover, &:active, &.fc-button-active {
+    background-color: var(--color-accent) !important; border-color: var(--color-accent) !important; box-shadow: none !important;
+    color: var(--color-on-accent) !important;
+  }
+}
+
+.fc-day-today { background-color: transparent !important; }
+.fc-day-today .fc-daygrid-day-number {
+  background-color: var(--color-accent) !important; color: var(--color-on-accent) !important;
+  border-radius: 50%; width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center; margin: 4px auto;
+}
+

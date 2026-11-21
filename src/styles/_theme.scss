@@ -1,0 +1,89 @@
+// Design tokens. Components use only these variables, never raw colors,
+// so the whole app switches theme by changing data-theme on <html>.
+
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --color-bg: #1a222c;
+  --color-surface: #212936;
+  --color-surface-raised: #1a202c;
+  --color-surface-muted: #303134;
+  --color-surface-muted-hover: #3c4043;
+  --color-surface-active: #2a2d45;
+
+  --color-text: #ffffff;
+  --color-text-secondary: #e8eaed;
+  --color-text-muted: #9ca3af;
+  --color-text-faint: #4a5065;
+
+  --color-border: rgba(255, 255, 255, 0.05);
+  --color-border-strong: rgba(255, 255, 255, 0.1);
+  --color-hover: rgba(255, 255, 255, 0.05);
+  --color-hover-strong: rgba(255, 255, 255, 0.1);
+
+  --color-accent: #8e54e9;
+  --color-accent-hover: #a074f0;
+  --color-accent-2: #4776e6;
+  --color-accent-soft: rgba(142, 84, 233, 0.12);
+  --color-accent-border: #483d7a;
+  --color-on-accent: #ffffff;
+
+  --color-success: #22c55e;
+  --color-success-soft: rgba(34, 197, 94, 0.1);
+  --color-info: #00b8d9;
+  --color-info-soft: rgba(0, 184, 217, 0.1);
+  --color-warning: #ffab00;
+  --color-warning-soft: rgba(255, 171, 0, 0.1);
+  --color-warning-border: rgba(255, 171, 0, 0.2);
+  --color-danger: #ff4757;
+  --color-danger-soft: rgba(255, 71, 87, 0.1);
+  --color-danger-border: rgba(255, 71, 87, 0.2);
+
+  --color-glass: rgba(30, 30, 40, 0.7);
+  --shadow-elevated: 0 16px 40px rgba(0, 0, 0, 0.5);
+  --gradient-login: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --color-bg: #f4f5f9;
+  --color-surface: #ffffff;
+  --color-surface-raised: #ffffff;
+  --color-surface-muted: #f1f3f7;
+  --color-surface-muted-hover: #e8ebf1;
+  --color-surface-active: #efe8fd;
+
+  --color-text: #1f2430;
+  --color-text-secondary: #2d3340;
+  --color-text-muted: #5f6675;
+  --color-text-faint: #a0a6b3;
+
+  --color-border: rgba(15, 23, 42, 0.08);
+  --color-border-strong: rgba(15, 23, 42, 0.16);
+  --color-hover: rgba(15, 23, 42, 0.04);
+  --color-hover-strong: rgba(15, 23, 42, 0.08);
+
+  --color-accent: #7c3aed;
+  --color-accent-hover: #6d28d9;
+  --color-accent-2: #4f6ef7;
+  --color-accent-soft: rgba(124, 58, 237, 0.1);
+  --color-accent-border: rgba(124, 58, 237, 0.35);
+  --color-on-accent: #ffffff;
+
+  --color-success: #16a34a;
+  --color-success-soft: rgba(22, 163, 74, 0.1);
+  --color-info: #0891b2;
+  --color-info-soft: rgba(8, 145, 178, 0.1);
+  --color-warning: #d97706;
+  --color-warning-soft: rgba(217, 119, 6, 0.1);
+  --color-warning-border: rgba(217, 119, 6, 0.25);
+  --color-danger: #dc2626;
+  --color-danger-soft: rgba(220, 38, 38, 0.08);
+  --color-danger-border: rgba(220, 38, 38, 0.2);
+
+  --color-glass: rgba(255, 255, 255, 0.85);
+  --shadow-elevated: 0 16px 40px rgba(15, 23, 42, 0.12);
+  --gradient-login: linear-gradient(135deg, #e0e7ff 0%, #f5f3ff 50%, #e0f2fe 100%);
+}
