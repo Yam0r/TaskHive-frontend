@@ -3,8 +3,8 @@ import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
 import { UserResponseDto } from '../../api';
-import { retry } from 'rxjs';
 import { UsersService } from '../../api/api/users.service';
+import { TokenService } from '../../core/auth/token.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -21,19 +21,17 @@ export class SidebarComponent implements OnInit{
   private userService = inject(UsersService)
   private cdr = inject(ChangeDetectorRef)
   private router = inject(Router);
+  private tokenService = inject(TokenService);
 
   currentUser:UserResponseDto | null = null;
 
   ngOnInit() {
+    // A 401 here is handled globally by authInterceptor (logout + redirect)
     this.userService.getMyProfileInfo().subscribe({
       next: (user) => {
-        console.log('Profile is upload:', user);
         this.currentUser = user;
-        this.cdr.detectChanges()
+        this.cdr.detectChanges();
       },
-      error: (err) => {
-        console.error('Ошибка при загрузке профиля (возможно, токен истек или не передался):', err);
-      }
     });
   }
 
@@ -47,7 +45,7 @@ export class SidebarComponent implements OnInit{
   }
 
   logout(){
-    localStorage.removeItem('token');
+    this.tokenService.clear();
     this.currentUser = null;
     this.router.navigate(['/login'])
   }

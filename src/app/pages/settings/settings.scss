@@ -1,41 +1,121 @@
-.empty-state-container {
-  flex-grow: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+.settings {
+  max-width: 720px;
 }
 
-.empty-state {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #ffffff;
+.settings-section {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 24px;
+}
 
-  .icon-wrapper {
-    width: 64px;
-    height: 64px;
-    background-color: #212936;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 16px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-
-    .emoji { font-size: 28px; }
-  }
+.section-header {
+  margin-bottom: 20px;
 
   h2 {
-    margin: 0 0 10px 0;
-    font-size: 24px;
+    margin: 0 0 4px;
+    font-size: 18px;
     font-weight: 600;
+    color: var(--color-text);
   }
 
   p {
     margin: 0;
-    color: #9CA3AF;
     font-size: 14px;
+    color: var(--color-text-muted);
+  }
+}
+
+.theme-options {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.theme-option {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 12px;
+  border: 2px solid var(--color-border-strong);
+  background: transparent;
+  color: var(--color-text);
+  font: inherit;
+  cursor: pointer;
+  transition: border-color 0.15s;
+
+  &:hover {
+    border-color: var(--color-text-muted);
+  }
+
+  &.selected {
+    border-color: var(--color-accent);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+}
+
+.option-label {
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
+}
+
+// Small mock-ups of each theme. Fixed colors on purpose:
+// they show what the other theme looks like, not the current one.
+.preview {
+  display: flex;
+  gap: 6px;
+  width: 160px;
+  height: 96px;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.preview-sidebar {
+  width: 28%;
+  border-radius: 4px;
+}
+
+.preview-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.preview-card {
+  flex: 1;
+  border-radius: 4px;
+}
+
+.preview-dark {
+  background: #1a222c;
+
+  .preview-sidebar,
+  .preview-card {
+    background: #212936;
+  }
+
+  .preview-card:first-child {
+    border-left: 3px solid #8e54e9;
+  }
+}
+
+.preview-light {
+  background: #f4f5f9;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+
+  .preview-sidebar,
+  .preview-card {
+    background: #ffffff;
+  }
+
+  .preview-card:first-child {
+    border-left: 3px solid #7c3aed;
   }
 }

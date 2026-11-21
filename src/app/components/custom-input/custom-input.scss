@@ -3,27 +3,27 @@
 }
 
 mat-error{
-  color: rgb(255, 85, 85);
+  color: var(--color-danger);
 }
 
 ::ng-deep {
   input.mat-mdc-input-element {
-    color: #ffffff !important;
+    color: var(--color-text) !important;
   }
 
   .mdc-floating-label {
-    color: #f3f4f6 !important;
+    color: var(--color-text-secondary) !important;
   }
 
   .mat-mdc-form-field-hint {
-    color: #9CA3AF !important;
+    color: var(--color-text-muted) !important;
   }
 
   .mdc-line-ripple::before {
-    border-bottom-color: rgba(255, 255, 255, 0.3) !important;
+    border-bottom-color: var(--color-border-strong) !important;
   }
   
   .mdc-line-ripple::after {
-    border-bottom-color: #8E54E9 !important;
+    border-bottom-color: var(--color-accent) !important;
   }
 }
