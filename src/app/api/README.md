@@ -1,8 +1,8 @@
 # @
 
-OpenAPI
+Task management REST API: projects, tasks, comments, labels, attachments
 
-The version of the OpenAPI document: 0.0.1
+The version of the OpenAPI document: 1.0
 
 ## Building
 

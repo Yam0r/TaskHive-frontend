@@ -1,5 +1,5 @@
 /**
- * OpenAPI
+ * TaskHive API
  *
  * 
  *
