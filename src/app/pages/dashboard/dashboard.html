@@ -1,10 +1,10 @@
 <main class="main-content">
-  <app-header></app-header>
+  <app-header [title]="'dashboard.title' | transloco"></app-header>
 
   <div class="dashboard-area">
     <div class="stats-grid">
       <app-stat-card
-        title="Всего задач"
+        [title]="'dashboard.totalTasks' | transloco"
         count="{{ stats.totalTasks || 0}}"
         iconName="adjust"
         colorType="primary"
@@ -12,7 +12,7 @@
       </app-stat-card>
 
       <app-stat-card
-        title="К выполнению"
+        [title]="'status.NOT_STARTED' | transloco"
         count="{{ stats.notStartedTasks }}"
         iconName="radio_button_unchecked"
         colorType="warning"
@@ -20,7 +20,7 @@
       </app-stat-card>
 
       <app-stat-card
-        title="В процессе"
+        [title]="'status.IN_PROGRESS' | transloco"
         count="{{ stats.inProgressTasks }}"
         iconName="tonality"
         colorType="info"
@@ -28,7 +28,7 @@
       </app-stat-card>
 
       <app-stat-card
-        title="Выполнено"
+        [title]="'status.COMPLETED' | transloco"
         count="{{ stats.completedTasks }}"
         iconName="check_circle_outline"
         colorType="success"

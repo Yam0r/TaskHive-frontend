@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, effect, inject } from '@angular/core';
 import { SidebarComponent } from '../../components/sidebar/sidebar';
 import { HeaderComponent } from '../../components/header/header';
 import { DatePipe } from '@angular/common';
@@ -9,6 +9,18 @@ import themePlugin from '@fullcalendar/angular/themes/monarch';
 import timeGridPlugin from '@fullcalendar/angular/timegrid';
 import interactionPlugin from '@fullcalendar/angular/interaction';
 import dayGridPlugin from '@fullcalendar/angular/daygrid';
+import csLocale from 'fullcalendar/locales/cs';
+import ruLocale from 'fullcalendar/locales/ru';
+import { TranslocoPipe } from '@jsverse/transloco';
+import { Language, LanguageService } from '../../core/i18n/language.service';
+
+// English is FullCalendar's built-in default.
+// Imported from 'fullcalendar' directly: the locales/* export of @fullcalendar/angular 7.1.5 is broken.
+const CALENDAR_LOCALES: Record<Language, string | typeof ruLocale> = {
+  en: 'en',
+  ru: ruLocale,
+  cs: csLocale,
+};
 
 export interface CalendarEvent {
   day: number;
@@ -20,13 +32,23 @@ export interface CalendarEvent {
 
 @Component({
   selector: 'app-calendar',
-  imports: [SidebarComponent, HeaderComponent, DatePipe, FormsModule, FullCalendarModule],
+  imports: [TranslocoPipe, SidebarComponent, HeaderComponent, DatePipe, FormsModule, FullCalendarModule],
   templateUrl: './calendar.html',
   styleUrl: './calendar.scss',
 })
 export class CalendarComponent {
-  currentDate = new Date();
-  constructor(private cdr: ChangeDetectorRef) {}
+  private readonly languageService = inject(LanguageService);
+  readonly locale = this.languageService.locale;
+
+  constructor(private cdr: ChangeDetectorRef) {
+    // Month names, weekdays and toolbar buttons follow the UI language
+    effect(() => {
+      this.calendarOptions = {
+        ...this.calendarOptions,
+        locale: CALENDAR_LOCALES[this.languageService.language()],
+      };
+    });
+  }
 
   calendarOptions: CalendarOptions = {
     plugins: [themePlugin, timeGridPlugin, interactionPlugin, dayGridPlugin],
@@ -113,7 +135,7 @@ export class CalendarComponent {
 
   openEmptyModal() {
     const today = new Date();
-    this.selectedStartStr = today.toISOString().split('T')[0]; // Сегодняшняя дата
+    this.selectedStartStr = today.toISOString().split('T')[0];
     this.selectedEndStr = this.selectedStartStr;
     this.openModalForm();
   }
@@ -194,7 +216,7 @@ export class CalendarComponent {
 
   deleteEvent(): void {
     if (this.selectedEventApi) {
-      if (confirm('Вы уверены, что хотите удалить эту задачу?')) {
+      if (confirm(this.languageService.translate('calendar.confirmDelete'))) {
         this.selectedEventApi.remove();
         this.closeModal();
       }

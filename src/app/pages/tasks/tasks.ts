@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { SidebarComponent } from "../../components/sidebar/sidebar";
 import { HeaderComponent } from "../../components/header/header";
 import { StatCardComponent } from "../../components/stat-card/stat-card";
 import { TaskDto, TaskStatisticsDto, TasksService } from '../../api';
 import { DatePipe } from '@angular/common';
+import { TranslocoPipe } from '@jsverse/transloco';
+import { LanguageService } from '../../core/i18n/language.service';
 
 @Component({
   selector: 'app-tasks',
-  imports: [SidebarComponent, HeaderComponent, StatCardComponent, DatePipe], 
+  imports: [TranslocoPipe, SidebarComponent, HeaderComponent, StatCardComponent, DatePipe], 
   templateUrl: './tasks.html',
   styleUrl: './tasks.scss',
 })
@@ -23,7 +25,7 @@ export class TasksComponent implements OnInit{
     completedTasks: 0
   };
 
-  currentDate = new Date(); 
+  readonly locale = inject(LanguageService).locale;
 
   constructor(private taskService: TasksService){}
   

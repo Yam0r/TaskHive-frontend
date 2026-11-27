@@ -1,4 +1,7 @@
 .settings {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
   max-width: 720px;
 }
 
@@ -32,7 +35,8 @@
   flex-wrap: wrap;
 }
 
-.theme-option {
+.theme-option,
+.language-option {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -118,4 +122,31 @@
   .preview-card:first-child {
     border-left: 3px solid #7c3aed;
   }
+}
+
+.language-options {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.language-option {
+  flex-direction: row;
+  align-items: center;
+  padding: 10px 16px;
+  min-width: 140px;
+}
+
+.language-code {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 24px;
+  border-radius: 6px;
+  background-color: var(--color-surface-muted);
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
 }

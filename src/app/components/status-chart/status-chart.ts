@@ -2,12 +2,15 @@ import { Component, effect, inject, Input, OnChanges, SimpleChanges } from '@ang
 import { ChartConfiguration } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { TaskStatisticsDto } from '../../api/model/taskStatisticsDto';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { ThemeService } from '../../core/theme/theme.service';
+import { LanguageService } from '../../core/i18n/language.service';
 
 @Component({
   selector: 'app-status-chart',
   imports: [
     BaseChartDirective,
+    TranslocoPipe,
   ],
   standalone: true,
   templateUrl: './status-chart.html',
@@ -15,6 +18,7 @@ import { ThemeService } from '../../core/theme/theme.service';
 })
 export class StatusChartComponent implements OnChanges {
   private readonly themeService = inject(ThemeService);
+  private readonly languageService = inject(LanguageService);
 
   @Input() stats: TaskStatisticsDto = {
     totalTasks: 0,
@@ -28,8 +32,10 @@ export class StatusChartComponent implements OnChanges {
 
   constructor() {
     // Canvas charts can't use CSS variables, so re-read the tokens on every theme change.
+    // Labels follow the current language.
     effect(() => {
       this.themeService.theme();
+      this.languageService.language();
       this.updateChartData();
       this.updateChartOptions();
     });
@@ -51,7 +57,9 @@ export class StatusChartComponent implements OnChanges {
   private updateChartData(): void {
     const css = (name: string) => this.themeService.cssVar(name);
     this.doughnutChartData = {
-      labels: ['Готово', 'В процессе', 'К выполнению'],
+      labels: ['status.COMPLETED', 'status.IN_PROGRESS', 'status.NOT_STARTED'].map((key) =>
+        this.languageService.translate(key),
+      ),
       datasets: [
         {
           data: [

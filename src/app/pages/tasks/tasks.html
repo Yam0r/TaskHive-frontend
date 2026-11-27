@@ -1,34 +1,34 @@
 <main class="main-content">
-  <app-header title="Мои задачи"></app-header>
+  <app-header [title]="'tasks.title' | transloco"></app-header>
 
-  <button class="btn-primary action-btn">+ Новая задача</button>
+  <button class="btn-primary action-btn">{{ 'tasks.newTask' | transloco }}</button>
 
   <div class="tasks-page">
     <div class="stats-grid">
-      <app-stat-card title="Всего" [count]="stats.totalTasks || 0" iconName="adjust" colorType="primary"></app-stat-card>
-      <app-stat-card title="К выполнению" [count]="stats.notStartedTasks || 0" iconName="radio_button_unchecked" colorType="warning"></app-stat-card>
-      <app-stat-card title="В процессе" [count]="stats.inProgressTasks || 0" iconName="tonality" colorType="info"></app-stat-card>
-      <app-stat-card title="Готово" [count]="stats.completedTasks || 0" iconName="check_circle_outline" colorType="success"></app-stat-card>
+      <app-stat-card [title]="'tasks.total' | transloco" [count]="stats.totalTasks || 0" iconName="adjust" colorType="primary"></app-stat-card>
+      <app-stat-card [title]="'status.NOT_STARTED' | transloco" [count]="stats.notStartedTasks || 0" iconName="radio_button_unchecked" colorType="warning"></app-stat-card>
+      <app-stat-card [title]="'status.IN_PROGRESS' | transloco" [count]="stats.inProgressTasks || 0" iconName="tonality" colorType="info"></app-stat-card>
+      <app-stat-card [title]="'status.COMPLETED' | transloco" [count]="stats.completedTasks || 0" iconName="check_circle_outline" colorType="success"></app-stat-card>
     </div>
 
     <div class="progress-section">
       <div class="progress-header">
-        <span class="progress-title">Общий прогресс</span>
+        <span class="progress-title">{{ 'tasks.progress' | transloco }}</span>
         <span class="progress-percent">{{ progressPercentage }}%</span>
       </div>
       <div class="progress-track">
         <div class="progress-fill" [style.width.%]="progressPercentage"></div>
       </div>
       <div class="progress-footer">
-        {{ stats.completedTasks || 0 }} из {{ stats.totalTasks || 0 }} задач завершено
+        {{ 'tasks.progressFooter' | transloco: { done: stats.completedTasks || 0, total: stats.totalTasks || 0 } }}
       </div>
     </div>
 
     <div class="filters-row">
-      <button class="filter-btn" [class.active]="activeFilter === 'ALL'" (click)="applyFilter('ALL')">Все</button>
-      <button class="filter-btn" [class.active]="activeFilter === 'NOT_STARTED'" (click)="applyFilter('NOT_STARTED')">К выполнению</button>
-      <button class="filter-btn" [class.active]="activeFilter === 'IN_PROGRESS'" (click)="applyFilter('IN_PROGRESS')">В процессе</button>
-      <button class="filter-btn" [class.active]="activeFilter === 'COMPLETED'" (click)="applyFilter('COMPLETED')">Готово</button>
+      <button class="filter-btn" [class.active]="activeFilter === 'ALL'" (click)="applyFilter('ALL')">{{ 'tasks.filterAll' | transloco }}</button>
+      <button class="filter-btn" [class.active]="activeFilter === 'NOT_STARTED'" (click)="applyFilter('NOT_STARTED')">{{ 'status.NOT_STARTED' | transloco }}</button>
+      <button class="filter-btn" [class.active]="activeFilter === 'IN_PROGRESS'" (click)="applyFilter('IN_PROGRESS')">{{ 'status.IN_PROGRESS' | transloco }}</button>
+      <button class="filter-btn" [class.active]="activeFilter === 'COMPLETED'" (click)="applyFilter('COMPLETED')">{{ 'status.COMPLETED' | transloco }}</button>
     </div>
 
     <div class="task-list">
@@ -42,18 +42,18 @@
               </h4>
               <div class="task-meta">
                 <span class="tag">ID: {{ task.id }}</span>
-                <span class="deadline">{{ task.dueDate || 'Без срока' }}</span>
+                <span class="deadline">{{ task.dueDate ? (task.dueDate | date: 'mediumDate' : undefined : locale()) : ('tasks.noDueDate' | transloco) }}</span>
               </div>
             </div>
           </div>
           <div class="task-actions">
             <div class="user-avatar">АК</div>
-            <div class="priority-badge high">Высокий</div>
+            <div class="priority-badge high">{{ 'tasks.priorityHigh' | transloco }}</div>
           </div>
         </div>
       } @empty {
         <div class="empty-state">
-          <p>Задач в этой категории пока нет</p>
+          <p>{{ 'tasks.empty' | transloco }}</p>
         </div>
       }
     </div>

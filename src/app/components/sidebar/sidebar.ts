@@ -5,10 +5,11 @@ import { Router, RouterModule } from '@angular/router';
 import { UserResponseDto } from '../../api';
 import { UsersService } from '../../api/api/users.service';
 import { TokenService } from '../../core/auth/token.service';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [
+  imports: [TranslocoPipe, 
     MatIconModule, 
     RouterModule,
     CommonModule,

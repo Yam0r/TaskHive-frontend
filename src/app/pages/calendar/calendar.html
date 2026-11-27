@@ -1,17 +1,17 @@
 <main class="main-content">
   <div class="header">
-    <app-header title="Календарь"></app-header>
-    <button class="btn-primary" (click)="openEmptyModal()">+ Новая задача</button>
+    <app-header [title]="'calendar.title' | transloco"></app-header>
+    <button class="btn-primary" (click)="openEmptyModal()">{{ 'tasks.newTask' | transloco }}</button>
   </div>
 
   <div class="calendar-page">
     <div class="stats-row">
       <div class="stat-card">
-        <span class="stat-title">Дедлайны в месяце</span>
+        <span class="stat-title">{{ 'calendar.deadlinesThisMonth' | transloco }}</span>
         <span class="stat-value">6</span>
       </div>
       <div class="stat-card">
-        <span class="stat-title">Запланировано встреч</span>
+        <span class="stat-title">{{ 'calendar.meetingsPlanned' | transloco }}</span>
         <span class="stat-value">0</span>
       </div>
     </div>
@@ -25,50 +25,43 @@
   <div class="modal-overlay" (click)="closeModal()">
     <div class="g-modal-content" (click)="$event.stopPropagation()">
       
-      <!-- Кнопка закрытия и верхняя панель -->
       <div class="g-modal-header">
-        <button class="icon-btn" (click)="closeModal()">✕</button>
+        <button class="icon-btn" type="button" [attr.aria-label]="'calendar.close' | transloco" (click)="closeModal()">✕</button>
       </div>
       
       <div class="g-modal-body">
-        <!-- Поле названия -->
         <div class="g-row title-row">
           <input 
             type="text" 
             class="g-title-input" 
-            placeholder="Добавьте название" 
+            [placeholder]="'calendar.addTitle' | transloco" 
             [(ngModel)]="newEventTitle" 
             autofocus
           />
         </div>
 
-        <!-- Разделитель для табов (как на скрине) -->
         <div class="g-row tabs-row">
-          <button class="g-tab active">Событие</button>
-          <button class="g-tab">Задача</button>
+          <button class="g-tab active">{{ 'calendar.event' | transloco }}</button>
+          <button class="g-tab">{{ 'calendar.task' | transloco }}</button>
         </div>
 
-        <!-- Время события -->
         <div class="g-row info-row">
           <span class="g-icon">🕒</span>
           <div class="g-info-text">
-            {{ selectedStartStr | date:'EEEE, d MMMM' }} &nbsp; 
-            <!-- Если есть время, можно выводить его здесь -->
-            <span class="g-time-faint">Весь день или выбранное время</span>
+            {{ selectedStartStr | date: 'EEEE, d MMMM' : undefined : locale() }} &nbsp; 
+            <span class="g-time-faint">{{ 'calendar.allDay' | transloco }}</span>
           </div>
         </div>
 
-        <!-- Описание / Заметки -->
         <div class="g-row info-row">
           <span class="g-icon">≡</span>
           <textarea 
             class="g-textarea" 
-            placeholder="Добавьте описание..." 
+            [placeholder]="'calendar.addDescription' | transloco" 
             [(ngModel)]="newEventDescription">
           </textarea>
         </div>
 
-        <!-- Выбор цвета (оставляем из твоего функционала) -->
         <div class="g-row info-row">
           <span class="g-icon">🎨</span>
           <div class="color-picker">
@@ -84,15 +77,14 @@
         </div>
       </div>
 
-      <!-- Кнопки действий -->
       <div class="g-modal-actions">
-        <button class="g-btn-text">Дополнительные параметры</button>
+        <button class="g-btn-text">{{ 'calendar.moreOptions' | transloco }}</button>
         <div class="right-actions">
           @if (isEditMode) {
-            <button class="g-btn-icon" title="Удалить" (click)="deleteEvent()">🗑️</button>
+            <button class="g-btn-icon" [title]="'calendar.delete' | transloco" (click)="deleteEvent()">🗑️</button>
           }
           <button class="g-btn-primary" (click)="isEditMode ? updateEvent() : addEvent()">
-            Сохранить
+            {{ 'calendar.save' | transloco }}
           </button>
         </div>
       </div>

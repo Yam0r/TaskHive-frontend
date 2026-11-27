@@ -3,11 +3,12 @@ import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TasksService } from '../../api/api/tasks.service';
 import { TaskDto } from '../../api/model/taskDto';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-deadline-list',
   standalone: true,
-  imports: [DatePipe, RouterLink],
+  imports: [TranslocoPipe, DatePipe, RouterLink],
   templateUrl: './deadline-list.html',
   styleUrl: './deadline-list.scss',
 })

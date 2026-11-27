@@ -1,0 +1,104 @@
+{
+  "nav": {
+    "dashboard": "Дашборд",
+    "tasks": "Мои задачи",
+    "team": "Команда",
+    "calendar": "Календарь",
+    "settings": "Настройки",
+    "logout": "Выйти"
+  },
+  "status": {
+    "NOT_STARTED": "К выполнению",
+    "IN_PROGRESS": "В процессе",
+    "COMPLETED": "Готово"
+  },
+  "auth": {
+    "login": "Войти",
+    "register": "Регистрация",
+    "cancel": "Отмена",
+    "signingIn": "Входим…",
+    "creatingAccount": "Создаём аккаунт…",
+    "email": "Email",
+    "password": "Пароль",
+    "repeatPassword": "Повторите пароль",
+    "username": "Имя пользователя",
+    "firstName": "Имя",
+    "lastName": "Фамилия",
+    "passwordsMismatch": "Пароли не совпадают.",
+    "errors": {
+      "invalidCredentials": "Неверный email или пароль.",
+      "serverUnavailable": "Сервер недоступен. Попробуйте позже.",
+      "unexpected": "Неожиданный ответ сервера. Попробуйте ещё раз.",
+      "generic": "Что-то пошло не так. Попробуйте ещё раз."
+    }
+  },
+  "form": {
+    "requiredHint": "Обязательное поле",
+    "required": "Поле «{{field}}» обязательно",
+    "email": "Введите корректный email",
+    "minlength": "«{{field}}»: минимум {{length}} символов",
+    "maxlength": "«{{field}}»: максимум {{length}} символов"
+  },
+  "dashboard": {
+    "title": "Дашборд",
+    "totalTasks": "Всего задач"
+  },
+  "activity": {
+    "title": "Активность за неделю",
+    "subtitle": "Создано и выполнено задач",
+    "created": "Создано",
+    "completed": "Выполнено"
+  },
+  "statusChart": {
+    "title": "Статусы",
+    "subtitle": "Распределение задач",
+    "done": "готово"
+  },
+  "deadlines": {
+    "title": "Ближайшие дедлайны",
+    "allTasks": "Все задачи",
+    "due": "до {{date}}",
+    "empty": "Нет задач с дедлайном 🎉"
+  },
+  "team": {
+    "title": "Команда",
+    "all": "Все",
+    "comingSoon": "Участники, роли и нагрузка — скоро здесь"
+  },
+  "tasks": {
+    "title": "Мои задачи",
+    "newTask": "+ Новая задача",
+    "total": "Всего",
+    "progress": "Общий прогресс",
+    "progressFooter": "{{done}} из {{total}} задач завершено",
+    "filterAll": "Все",
+    "noDueDate": "Без срока",
+    "priorityHigh": "Высокий",
+    "empty": "Задач в этой категории пока нет"
+  },
+  "calendar": {
+    "title": "Календарь",
+    "deadlinesThisMonth": "Дедлайны в месяце",
+    "meetingsPlanned": "Запланировано встреч",
+    "addTitle": "Добавьте название",
+    "event": "Событие",
+    "task": "Задача",
+    "allDay": "Весь день или выбранное время",
+    "addDescription": "Добавьте описание…",
+    "moreOptions": "Дополнительные параметры",
+    "delete": "Удалить",
+    "save": "Сохранить",
+    "close": "Закрыть",
+    "confirmDelete": "Вы уверены, что хотите удалить это событие?"
+  },
+  "settings": {
+    "title": "Настройки",
+    "appearance": "Внешний вид",
+    "appearanceHint": "Выберите, как TaskHive выглядит на этом устройстве.",
+    "dark": "Тёмная",
+    "light": "Светлая",
+    "theme": "Тема",
+    "language": "Язык",
+    "languageHint": "Выберите язык интерфейса."
+  }
+}

@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-team-list',
-  imports: [
+  imports: [TranslocoPipe, 
     CommonModule,
     
   ],

@@ -1,0 +1,104 @@
+{
+  "nav": {
+    "dashboard": "Přehled",
+    "tasks": "Moje úkoly",
+    "team": "Tým",
+    "calendar": "Kalendář",
+    "settings": "Nastavení",
+    "logout": "Odhlásit se"
+  },
+  "status": {
+    "NOT_STARTED": "K řešení",
+    "IN_PROGRESS": "Probíhá",
+    "COMPLETED": "Hotovo"
+  },
+  "auth": {
+    "login": "Přihlásit se",
+    "register": "Registrace",
+    "cancel": "Zrušit",
+    "signingIn": "Přihlašování…",
+    "creatingAccount": "Vytváření účtu…",
+    "email": "E-mail",
+    "password": "Heslo",
+    "repeatPassword": "Zopakujte heslo",
+    "username": "Uživatelské jméno",
+    "firstName": "Jméno",
+    "lastName": "Příjmení",
+    "passwordsMismatch": "Hesla se neshodují.",
+    "errors": {
+      "invalidCredentials": "Neplatný e-mail nebo heslo.",
+      "serverUnavailable": "Server je nedostupný. Zkuste to prosím později.",
+      "unexpected": "Neočekávaná odpověď serveru. Zkuste to prosím znovu.",
+      "generic": "Něco se pokazilo. Zkuste to prosím znovu."
+    }
+  },
+  "form": {
+    "requiredHint": "Povinné pole",
+    "required": "Pole „{{field}}“ je povinné",
+    "email": "Zadejte platný e-mail",
+    "minlength": "„{{field}}“: alespoň {{length}} znaků",
+    "maxlength": "„{{field}}“: nejvýše {{length}} znaků"
+  },
+  "dashboard": {
+    "title": "Přehled",
+    "totalTasks": "Úkolů celkem"
+  },
+  "activity": {
+    "title": "Týdenní aktivita",
+    "subtitle": "Vytvořené a dokončené úkoly",
+    "created": "Vytvořeno",
+    "completed": "Dokončeno"
+  },
+  "statusChart": {
+    "title": "Stavy",
+    "subtitle": "Rozložení úkolů",
+    "done": "hotovo"
+  },
+  "deadlines": {
+    "title": "Nejbližší termíny",
+    "allTasks": "Všechny úkoly",
+    "due": "do {{date}}",
+    "empty": "Žádné úkoly s termínem 🎉"
+  },
+  "team": {
+    "title": "Tým",
+    "all": "Vše",
+    "comingSoon": "Členové, role a vytížení — již brzy"
+  },
+  "tasks": {
+    "title": "Moje úkoly",
+    "newTask": "+ Nový úkol",
+    "total": "Celkem",
+    "progress": "Celkový postup",
+    "progressFooter": "Dokončeno {{done}} z {{total}} úkolů",
+    "filterAll": "Vše",
+    "noDueDate": "Bez termínu",
+    "priorityHigh": "Vysoká",
+    "empty": "V této kategorii zatím nejsou žádné úkoly"
+  },
+  "calendar": {
+    "title": "Kalendář",
+    "deadlinesThisMonth": "Termíny v měsíci",
+    "meetingsPlanned": "Naplánované schůzky",
+    "addTitle": "Přidejte název",
+    "event": "Událost",
+    "task": "Úkol",
+    "allDay": "Celý den nebo vybraný čas",
+    "addDescription": "Přidejte popis…",
+    "moreOptions": "Další možnosti",
+    "delete": "Smazat",
+    "save": "Uložit",
+    "close": "Zavřít",
+    "confirmDelete": "Opravdu chcete tuto událost smazat?"
+  },
+  "settings": {
+    "title": "Nastavení",
+    "appearance": "Vzhled",
+    "appearanceHint": "Vyberte, jak bude TaskHive na tomto zařízení vypadat.",
+    "dark": "Tmavý",
+    "light": "Světlý",
+    "theme": "Motiv",
+    "language": "Jazyk",
+    "languageHint": "Vyberte jazyk rozhraní."
+  }
+}

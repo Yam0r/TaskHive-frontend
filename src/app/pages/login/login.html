@@ -3,24 +3,24 @@
 
     @if (currentView === 'menu') {
       <div class="auth-button-space">
-        <button class="auth-buttons" type="button" (click)="showLogin()">Login</button>
-        <button class="auth-buttons" type="button" (click)="showRegistration()">Register</button>
+        <button class="auth-buttons" type="button" (click)="showLogin()">{{ 'auth.login' | transloco }}</button>
+        <button class="auth-buttons" type="button" (click)="showRegistration()">{{ 'auth.register' | transloco }}</button>
       </div>
     }
 
     @else if (currentView === 'login') {
       <form [formGroup]="loginForm" (ngSubmit)="onLogin()" novalidate>
-        <h2 class="auth-header">Login</h2>
+        <h2 class="auth-header">{{ 'auth.login' | transloco }}</h2>
 
         <input-error-state-matcher-example
           [control]="loginForm.controls.email"
-          label="Email"
+          [label]="'auth.email' | transloco"
           type="email">
         </input-error-state-matcher-example>
 
         <input-error-state-matcher-example
           [control]="loginForm.controls.password"
-          label="Password"
+          [label]="'auth.password' | transloco"
           type="password">
         </input-error-state-matcher-example>
 
@@ -29,9 +29,9 @@
         }
 
         <div class="auth-button-space">
-          <button class="cancel-button" type="button" (click)="showMenu()">Cancel</button>
+          <button class="cancel-button" type="button" (click)="showMenu()">{{ 'auth.cancel' | transloco }}</button>
           <button class="cancel-button" type="submit" [disabled]="loading()">
-            {{ loading() ? 'Signing in…' : 'Login' }}
+            {{ (loading() ? 'auth.signingIn' : 'auth.login') | transloco }}
           </button>
         </div>
       </form>
@@ -39,47 +39,47 @@
 
     @else if (currentView === 'register') {
       <form [formGroup]="registerForm" (ngSubmit)="onRegister()" novalidate>
-        <h2 class="auth-header">Register</h2>
+        <h2 class="auth-header">{{ 'auth.register' | transloco }}</h2>
 
         <input-error-state-matcher-example
           [control]="registerForm.controls.email"
-          label="Email"
+          [label]="'auth.email' | transloco"
           type="email">
         </input-error-state-matcher-example>
 
         <input-error-state-matcher-example
           [control]="registerForm.controls.username"
-          label="Username">
+          [label]="'auth.username' | transloco">
         </input-error-state-matcher-example>
 
         <div class="name-row">
           <input-error-state-matcher-example
             [control]="registerForm.controls.firstName"
-            label="First name"
+            [label]="'auth.firstName' | transloco"
             [required]="false">
           </input-error-state-matcher-example>
 
           <input-error-state-matcher-example
             [control]="registerForm.controls.lastName"
-            label="Last name"
+            [label]="'auth.lastName' | transloco"
             [required]="false">
           </input-error-state-matcher-example>
         </div>
 
         <input-error-state-matcher-example
           [control]="registerForm.controls.password"
-          label="Password"
+          [label]="'auth.password' | transloco"
           type="password">
         </input-error-state-matcher-example>
 
         <input-error-state-matcher-example
           [control]="registerForm.controls.repeatPassword"
-          label="Repeat password"
+          [label]="'auth.repeatPassword' | transloco"
           type="password">
         </input-error-state-matcher-example>
 
         @if (registerForm.hasError('passwordMismatch') && registerForm.controls.repeatPassword.touched) {
-          <p class="form-error" role="alert">Passwords do not match.</p>
+          <p class="form-error" role="alert">{{ 'auth.passwordsMismatch' | transloco }}</p>
         }
 
         @for (message of errorMessages(); track message) {
@@ -87,9 +87,9 @@
         }
 
         <div class="auth-button-space">
-          <button class="cancel-button" type="button" (click)="showMenu()">Cancel</button>
+          <button class="cancel-button" type="button" (click)="showMenu()">{{ 'auth.cancel' | transloco }}</button>
           <button class="cancel-button" type="submit" [disabled]="loading()">
-            {{ loading() ? 'Creating account…' : 'Register' }}
+            {{ (loading() ? 'auth.creatingAccount' : 'auth.register') | transloco }}
           </button>
         </div>
       </form>

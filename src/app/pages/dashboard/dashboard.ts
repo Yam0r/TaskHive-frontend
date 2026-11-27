@@ -9,10 +9,11 @@ import { TeamListComponent } from "../../components/team-list/team-list";
 
 import { TaskStatisticsDto } from '../../api/model/taskStatisticsDto';
 import { TasksService } from '../../api/api/tasks.service';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [
+  imports: [TranslocoPipe, 
     SidebarComponent,
     HeaderComponent,
     StatCardComponent,

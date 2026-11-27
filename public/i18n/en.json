@@ -1,0 +1,104 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "tasks": "My tasks",
+    "team": "Team",
+    "calendar": "Calendar",
+    "settings": "Settings",
+    "logout": "Log out"
+  },
+  "status": {
+    "NOT_STARTED": "To do",
+    "IN_PROGRESS": "In progress",
+    "COMPLETED": "Done"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "cancel": "Cancel",
+    "signingIn": "Signing in…",
+    "creatingAccount": "Creating account…",
+    "email": "Email",
+    "password": "Password",
+    "repeatPassword": "Repeat password",
+    "username": "Username",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "passwordsMismatch": "Passwords do not match.",
+    "errors": {
+      "invalidCredentials": "Invalid email or password.",
+      "serverUnavailable": "Server is unavailable. Please try again later.",
+      "unexpected": "Unexpected server response. Please try again.",
+      "generic": "Something went wrong. Please try again."
+    }
+  },
+  "form": {
+    "requiredHint": "Required field",
+    "required": "{{field}} is required",
+    "email": "Enter a valid email address",
+    "minlength": "{{field}} must contain at least {{length}} characters",
+    "maxlength": "{{field}} must be at most {{length}} characters"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "totalTasks": "Total tasks"
+  },
+  "activity": {
+    "title": "Weekly activity",
+    "subtitle": "Tasks created and completed",
+    "created": "Created",
+    "completed": "Completed"
+  },
+  "statusChart": {
+    "title": "Statuses",
+    "subtitle": "Task distribution",
+    "done": "done"
+  },
+  "deadlines": {
+    "title": "Upcoming deadlines",
+    "allTasks": "All tasks",
+    "due": "due {{date}}",
+    "empty": "No tasks with a deadline 🎉"
+  },
+  "team": {
+    "title": "Team",
+    "all": "All",
+    "comingSoon": "Members, roles and workload — coming soon"
+  },
+  "tasks": {
+    "title": "My tasks",
+    "newTask": "+ New task",
+    "total": "Total",
+    "progress": "Overall progress",
+    "progressFooter": "{{done}} of {{total}} tasks completed",
+    "filterAll": "All",
+    "noDueDate": "No due date",
+    "priorityHigh": "High",
+    "empty": "No tasks in this category yet"
+  },
+  "calendar": {
+    "title": "Calendar",
+    "deadlinesThisMonth": "Deadlines this month",
+    "meetingsPlanned": "Meetings planned",
+    "addTitle": "Add title",
+    "event": "Event",
+    "task": "Task",
+    "allDay": "All day or selected time",
+    "addDescription": "Add description…",
+    "moreOptions": "More options",
+    "delete": "Delete",
+    "save": "Save",
+    "close": "Close",
+    "confirmDelete": "Are you sure you want to delete this event?"
+  },
+  "settings": {
+    "title": "Settings",
+    "appearance": "Appearance",
+    "appearanceHint": "Choose how TaskHive looks on this device.",
+    "dark": "Dark",
+    "light": "Light",
+    "theme": "Theme",
+    "language": "Language",
+    "languageHint": "Choose the interface language."
+  }
+}

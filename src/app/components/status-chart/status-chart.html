@@ -1,6 +1,6 @@
 <div class="chart-header">
-  <h3 class="chart-title">Статусы</h3>
-  <span class="chart-subtitle">Распределение задач</span>
+  <h3 class="chart-title">{{ 'statusChart.title' | transloco }}</h3>
+  <span class="chart-subtitle">{{ 'statusChart.subtitle' | transloco }}</span>
 </div>
 
 <div class="chart-content">
@@ -13,26 +13,26 @@
     
     <div class="center-text">
       <span class="percent">{{ completionPercentage || 0}}%</span>
-      <span class="label">готово</span>
+      <span class="label">{{ 'statusChart.done' | transloco }}</span>
     </div>
   </div>
 
   <div class="custom-legend">
     <div class="legend-item">
       <div class="dot success"></div>
-      <span class="name">Готово</span>
+      <span class="name">{{ 'status.COMPLETED' | transloco }}</span>
       <span class="count">{{ stats.completedTasks }}</span>
     </div>
     
     <div class="legend-item">
       <div class="dot info"></div>
-      <span class="name">В процессе</span>
+      <span class="name">{{ 'status.IN_PROGRESS' | transloco }}</span>
       <span class="count">{{ stats.inProgressTasks }}</span>
     </div>
     
     <div class="legend-item">
       <div class="dot primary"></div>
-      <span class="name">К выполнению</span>
+      <span class="name">{{ 'status.NOT_STARTED' | transloco }}</span>
       <span class="count">{{ stats.notStartedTasks }}</span>
     </div>
   </div>
