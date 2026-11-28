@@ -1,53 +1,56 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
-import { UserResponseDto } from '../../api';
-import { UsersService } from '../../api/api/users.service';
-import { TokenService } from '../../core/auth/token.service';
 import { TranslocoPipe } from '@jsverse/transloco';
+
+import { TokenService } from '../../core/auth/token.service';
+import { TaskStore } from '../../core/tasks/task-store.service';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [TranslocoPipe, 
-    MatIconModule, 
-    RouterModule,
-    CommonModule,
-
-  ],
+  imports: [TranslocoPipe, MatIconModule, RouterModule],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.scss',
 })
-export class SidebarComponent implements OnInit{
-  private userService = inject(UsersService)
-  private cdr = inject(ChangeDetectorRef)
-  private router = inject(Router);
-  private tokenService = inject(TokenService);
+export class SidebarComponent implements OnInit {
+  private readonly router = inject(Router);
+  private readonly tokenService = inject(TokenService);
+  private readonly store = inject(TaskStore);
 
-  currentUser:UserResponseDto | null = null;
+  readonly user = this.store.me;
 
-  ngOnInit() {
+  /** Tasks that are not done yet, shown next to "My tasks". */
+  readonly openTasks = computed(() => {
+    const { total, completed } = this.store.stats();
+    return total - completed;
+  });
+
+  /** "First Last", or the part of the email before @ when the user has no name. */
+  readonly displayName = computed(() => {
+    const user = this.user();
+    if (!user) return '';
+    const fullName = [user.firstName, user.lastName].filter(Boolean).join(' ');
+    return fullName || (user.email ?? '').split('@')[0];
+  });
+
+  readonly initials = computed(() => {
+    const user = this.user();
+    if (user?.firstName || user?.lastName) {
+      return ((user.firstName?.[0] ?? '') + (user.lastName?.[0] ?? '')).toUpperCase();
+    }
+    return this.displayName().slice(0, 2).toUpperCase();
+  });
+
+  ngOnInit(): void {
     // A 401 here is handled globally by authInterceptor (logout + redirect)
-    this.userService.getMyProfileInfo().subscribe({
-      next: (user) => {
-        this.currentUser = user;
-        this.cdr.detectChanges();
-      },
-    });
+    if (!this.user()) {
+      this.store.load();
+    }
   }
 
-  getInitials(firstName?: string, lastName?: string): string {
-    if (!firstName && !lastName) return 'UN';
-    
-    const firstLetter = firstName ? firstName.charAt(0).toUpperCase() : '';
-    const lastLetter = lastName ? lastName.charAt(0).toUpperCase() : '';
-    
-    return `${firstLetter}${lastLetter}`;
-  }
-
-  logout(){
+  logout(): void {
     this.tokenService.clear();
-    this.currentUser = null;
-    this.router.navigate(['/login'])
+    this.store.reset();
+    this.router.navigate(['/login']);
   }
 }

@@ -1,95 +1,31 @@
 <main class="main-content">
   <div class="header">
     <app-header [title]="'calendar.title' | transloco"></app-header>
-    <button class="btn-primary" (click)="openEmptyModal()">{{ 'tasks.newTask' | transloco }}</button>
+    <button type="button" class="btn-primary" (click)="openCreate()">{{ 'tasks.newTask' | transloco }}</button>
   </div>
 
   <div class="calendar-page">
     <div class="stats-row">
       <div class="stat-card">
         <span class="stat-title">{{ 'calendar.deadlinesThisMonth' | transloco }}</span>
-        <span class="stat-value">6</span>
+        <span class="stat-value">{{ deadlinesThisMonth() }}</span>
       </div>
       <div class="stat-card">
-        <span class="stat-title">{{ 'calendar.meetingsPlanned' | transloco }}</span>
-        <span class="stat-value">0</span>
+        <span class="stat-title">{{ 'calendar.overdue' | transloco }}</span>
+        <span class="stat-value" [class.danger]="overdue() > 0">{{ overdue() }}</span>
       </div>
     </div>
+
+    @if (loadError()) {
+      <p class="load-error" role="alert">{{ 'common.loadError' | transloco }}</p>
+    }
 
     <div class="full-calendar-container">
-      <full-calendar [options]="calendarOptions"></full-calendar>
+      <full-calendar [options]="calendarOptions()"></full-calendar>
     </div>
   </div>
 
-  @if (isModalOpen) {
-  <div class="modal-overlay" (click)="closeModal()">
-    <div class="g-modal-content" (click)="$event.stopPropagation()">
-      
-      <div class="g-modal-header">
-        <button class="icon-btn" type="button" [attr.aria-label]="'calendar.close' | transloco" (click)="closeModal()">✕</button>
-      </div>
-      
-      <div class="g-modal-body">
-        <div class="g-row title-row">
-          <input 
-            type="text" 
-            class="g-title-input" 
-            [placeholder]="'calendar.addTitle' | transloco" 
-            [(ngModel)]="newEventTitle" 
-            autofocus
-          />
-        </div>
-
-        <div class="g-row tabs-row">
-          <button class="g-tab active">{{ 'calendar.event' | transloco }}</button>
-          <button class="g-tab">{{ 'calendar.task' | transloco }}</button>
-        </div>
-
-        <div class="g-row info-row">
-          <span class="g-icon">🕒</span>
-          <div class="g-info-text">
-            {{ selectedStartStr | date: 'EEEE, d MMMM' : undefined : locale() }} &nbsp; 
-            <span class="g-time-faint">{{ 'calendar.allDay' | transloco }}</span>
-          </div>
-        </div>
-
-        <div class="g-row info-row">
-          <span class="g-icon">≡</span>
-          <textarea 
-            class="g-textarea" 
-            [placeholder]="'calendar.addDescription' | transloco" 
-            [(ngModel)]="newEventDescription">
-          </textarea>
-        </div>
-
-        <div class="g-row info-row">
-          <span class="g-icon">🎨</span>
-          <div class="color-picker">
-            @for (color of availableColors; track color) {
-              <button
-                class="color-btn"
-                [class]="color"
-                [class.active]="selectedColor === color"
-                (click)="selectedColor = color"
-              ></button>
-            }
-          </div>
-        </div>
-      </div>
-
-      <div class="g-modal-actions">
-        <button class="g-btn-text">{{ 'calendar.moreOptions' | transloco }}</button>
-        <div class="right-actions">
-          @if (isEditMode) {
-            <button class="g-btn-icon" [title]="'calendar.delete' | transloco" (click)="deleteEvent()">🗑️</button>
-          }
-          <button class="g-btn-primary" (click)="isEditMode ? updateEvent() : addEvent()">
-            {{ 'calendar.save' | transloco }}
-          </button>
-        </div>
-      </div>
-
-    </div>
-  </div>
-}
+  @if (dialogOpen()) {
+    <app-task-dialog [task]="dialogTask()" [date]="dialogDate()" (closed)="closeDialog()"></app-task-dialog>
+  }
 </main>

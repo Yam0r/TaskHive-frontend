@@ -1,61 +1,92 @@
 <main class="main-content">
   <app-header [title]="'tasks.title' | transloco"></app-header>
 
-  <button class="btn-primary action-btn">{{ 'tasks.newTask' | transloco }}</button>
+  <button type="button" class="btn-primary action-btn" (click)="openCreate()">{{ 'tasks.newTask' | transloco }}</button>
 
   <div class="tasks-page">
     <div class="stats-grid">
-      <app-stat-card [title]="'tasks.total' | transloco" [count]="stats.totalTasks || 0" iconName="adjust" colorType="primary"></app-stat-card>
-      <app-stat-card [title]="'status.NOT_STARTED' | transloco" [count]="stats.notStartedTasks || 0" iconName="radio_button_unchecked" colorType="warning"></app-stat-card>
-      <app-stat-card [title]="'status.IN_PROGRESS' | transloco" [count]="stats.inProgressTasks || 0" iconName="tonality" colorType="info"></app-stat-card>
-      <app-stat-card [title]="'status.COMPLETED' | transloco" [count]="stats.completedTasks || 0" iconName="check_circle_outline" colorType="success"></app-stat-card>
+      <app-stat-card [title]="'tasks.total' | transloco" [count]="stats().total" iconName="adjust" colorType="primary"></app-stat-card>
+      <app-stat-card [title]="'status.NOT_STARTED' | transloco" [count]="stats().notStarted" iconName="radio_button_unchecked" colorType="warning"></app-stat-card>
+      <app-stat-card [title]="'status.IN_PROGRESS' | transloco" [count]="stats().inProgress" iconName="tonality" colorType="info"></app-stat-card>
+      <app-stat-card [title]="'status.COMPLETED' | transloco" [count]="stats().completed" iconName="check_circle_outline" colorType="success"></app-stat-card>
     </div>
 
     <div class="progress-section">
       <div class="progress-header">
         <span class="progress-title">{{ 'tasks.progress' | transloco }}</span>
-        <span class="progress-percent">{{ progressPercentage }}%</span>
+        <span class="progress-percent">{{ progressPercentage() }}%</span>
       </div>
       <div class="progress-track">
-        <div class="progress-fill" [style.width.%]="progressPercentage"></div>
+        <div class="progress-fill" [style.width.%]="progressPercentage()"></div>
       </div>
       <div class="progress-footer">
-        {{ 'tasks.progressFooter' | transloco: { done: stats.completedTasks || 0, total: stats.totalTasks || 0 } }}
+        {{ 'tasks.progressFooter' | transloco: { done: stats().completed, total: stats().total } }}
       </div>
     </div>
 
-    <div class="filters-row">
-      <button class="filter-btn" [class.active]="activeFilter === 'ALL'" (click)="applyFilter('ALL')">{{ 'tasks.filterAll' | transloco }}</button>
-      <button class="filter-btn" [class.active]="activeFilter === 'NOT_STARTED'" (click)="applyFilter('NOT_STARTED')">{{ 'status.NOT_STARTED' | transloco }}</button>
-      <button class="filter-btn" [class.active]="activeFilter === 'IN_PROGRESS'" (click)="applyFilter('IN_PROGRESS')">{{ 'status.IN_PROGRESS' | transloco }}</button>
-      <button class="filter-btn" [class.active]="activeFilter === 'COMPLETED'" (click)="applyFilter('COMPLETED')">{{ 'status.COMPLETED' | transloco }}</button>
+    <div class="filters-row" role="tablist">
+      @for (filter of filters; track filter) {
+        <button
+          type="button"
+          class="filter-btn"
+          role="tab"
+          [class.active]="activeFilter() === filter"
+          [attr.aria-selected]="activeFilter() === filter"
+          (click)="activeFilter.set(filter)"
+        >
+          {{ (filter === 'ALL' ? 'tasks.filterAll' : 'status.' + filter) | transloco }}
+        </button>
+      }
     </div>
 
+    @if (loadError()) {
+      <p class="load-error" role="alert">{{ 'common.loadError' | transloco }}</p>
+    }
+
     <div class="task-list">
-      @for (task of filteredTasks; track task.id) {
-        <div class="task-card">
+      @for (task of visibleTasks(); track task.id) {
+        <div class="task-card" [class.overdue]="isOverdue(task)">
           <div class="task-main">
-            <button class="status-circle" [class.completed]="task.status === 'COMPLETED'"></button>
-            <div class="task-info">
-              <h4 class="task-title" [class.completed-text]="task.status === 'COMPLETED'">
-                {{ task.name }}
-              </h4>
-              <div class="task-meta">
-                <span class="tag">ID: {{ task.id }}</span>
-                <span class="deadline">{{ task.dueDate ? (task.dueDate | date: 'mediumDate' : undefined : locale()) : ('tasks.noDueDate' | transloco) }}</span>
-              </div>
-            </div>
+            <button
+              type="button"
+              class="status-circle"
+              [class.in-progress]="task.status === 'IN_PROGRESS'"
+              [class.completed]="task.status === 'COMPLETED'"
+              [disabled]="updatingId() === task.id"
+              [attr.aria-label]="('tasks.changeStatus' | transloco) + ': ' + ('status.' + task.status | transloco)"
+              (click)="cycleStatus(task)"
+            ></button>
+            <button type="button" class="task-info" (click)="openEdit(task)">
+              <span class="task-title" [class.completed-text]="task.status === 'COMPLETED'">{{ task.name }}</span>
+              @if (projectName(task); as project) {
+                <span class="task-project">{{ project }}</span>
+              }
+            </button>
           </div>
           <div class="task-actions">
-            <div class="user-avatar">АК</div>
-            <div class="priority-badge high">{{ 'tasks.priorityHigh' | transloco }}</div>
+            <span class="status-pill">{{ 'status.' + task.status | transloco }}</span>
+            <span class="deadline" [class.overdue]="isOverdue(task)">
+              @if (!task.dueDate) {
+                {{ 'tasks.noDueDate' | transloco }}
+              } @else if (isOverdue(task)) {
+                {{ 'tasks.overdue' | transloco: { date: (task.dueDate | date: 'mediumDate' : undefined : locale()) } }}
+              } @else {
+                {{ task.dueDate | date: 'mediumDate' : undefined : locale() }}
+              }
+            </span>
           </div>
         </div>
       } @empty {
-        <div class="empty-state">
-          <p>{{ 'tasks.empty' | transloco }}</p>
-        </div>
+        @if (!loading()) {
+          <div class="empty-state">
+            <p>{{ 'tasks.empty' | transloco }}</p>
+          </div>
+        }
       }
     </div>
   </div>
+
+  @if (dialogOpen()) {
+    <app-task-dialog [task]="dialogTask()" (closed)="closeDialog()"></app-task-dialog>
+  }
 </main>

@@ -66,28 +66,10 @@
 .task-date {
   color: var(--color-text-muted);
   font-size: 13px;
-  margin-right: 16px;
+  white-space: nowrap;
 }
 
-.badge {
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-size: 12px;
+.overdue {
+  color: var(--color-danger);
   font-weight: 500;
-
-  &.high {
-    color: var(--color-danger);
-    background-color: var(--color-danger-soft);
-    border: 1px solid var(--color-danger-border);
-  }
-
-  &.medium {
-    color: var(--color-warning);
-    background-color: var(--color-warning-soft);
-    border: 1px solid var(--color-warning-border);
-  }
-}
-
-.overdue { 
-  color: var(--color-danger); 
 }

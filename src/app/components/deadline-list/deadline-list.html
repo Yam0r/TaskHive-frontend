@@ -9,10 +9,16 @@
       <div class="dot" [class.active]="task.status === 'IN_PROGRESS'"></div>
       <div class="task-info">
         <span class="task-name">{{ task.name }}</span>
-        <span class="task-category">{{ task.description }}</span>
+        @if (projectName(task); as project) {
+          <span class="task-category">{{ project }}</span>
+        }
       </div>
       <span class="task-date" [class.overdue]="isOverdue(task)">
-        {{ 'deadlines.due' | transloco: { date: (task.dueDate | date: 'dd.MM') } }}
+        @if (isOverdue(task)) {
+          {{ 'tasks.overdue' | transloco: { date: (task.dueDate | date: 'd MMM' : undefined : locale()) } }}
+        } @else {
+          {{ 'deadlines.due' | transloco: { date: (task.dueDate | date: 'd MMM' : undefined : locale()) } }}
+        }
       </span>
     </div>
   } @empty {

@@ -2,7 +2,6 @@
   "nav": {
     "dashboard": "Přehled",
     "tasks": "Moje úkoly",
-    "team": "Tým",
     "calendar": "Kalendář",
     "settings": "Nastavení",
     "logout": "Odhlásit se"
@@ -44,10 +43,9 @@
     "totalTasks": "Úkolů celkem"
   },
   "activity": {
-    "title": "Týdenní aktivita",
-    "subtitle": "Vytvořené a dokončené úkoly",
-    "created": "Vytvořeno",
-    "completed": "Dokončeno"
+    "title": "Týden dopředu",
+    "subtitle": "Úkoly s termínem v příštích 7 dnech podle stavu",
+    "overdue": "Po termínu"
   },
   "statusChart": {
     "title": "Stavy",
@@ -58,12 +56,7 @@
     "title": "Nejbližší termíny",
     "allTasks": "Všechny úkoly",
     "due": "do {{date}}",
-    "empty": "Žádné úkoly s termínem 🎉"
-  },
-  "team": {
-    "title": "Tým",
-    "all": "Vše",
-    "comingSoon": "Členové, role a vytížení — již brzy"
+    "empty": "Žádné úkoly s termínem"
   },
   "tasks": {
     "title": "Moje úkoly",
@@ -73,23 +66,20 @@
     "progressFooter": "Dokončeno {{done}} z {{total}} úkolů",
     "filterAll": "Vše",
     "noDueDate": "Bez termínu",
-    "priorityHigh": "Vysoká",
-    "empty": "V této kategorii zatím nejsou žádné úkoly"
+    "empty": "V této kategorii zatím nejsou žádné úkoly",
+    "changeStatus": "Změnit stav",
+    "overdue": "po termínu · {{date}}"
   },
   "calendar": {
     "title": "Kalendář",
     "deadlinesThisMonth": "Termíny v měsíci",
-    "meetingsPlanned": "Naplánované schůzky",
     "addTitle": "Přidejte název",
-    "event": "Událost",
-    "task": "Úkol",
-    "allDay": "Celý den nebo vybraný čas",
     "addDescription": "Přidejte popis…",
-    "moreOptions": "Další možnosti",
     "delete": "Smazat",
     "save": "Uložit",
     "close": "Zavřít",
-    "confirmDelete": "Opravdu chcete tuto událost smazat?"
+    "overdue": "Po termínu",
+    "hint": "Kliknutím na den přidáte úkol. Přetažením úkolu na jiný den změníte termín."
   },
   "settings": {
     "title": "Nastavení",
@@ -100,5 +90,27 @@
     "theme": "Motiv",
     "language": "Jazyk",
     "languageHint": "Vyberte jazyk rozhraní."
+  },
+  "common": {
+    "loadError": "Úkoly se nepodařilo načíst. Zkontrolujte, že server běží, a obnovte stránku."
+  },
+  "taskDialog": {
+    "newTitle": "Nový úkol",
+    "editTitle": "Upravit úkol",
+    "name": "Název",
+    "project": "Projekt",
+    "newProject": "+ Nový projekt…",
+    "newProjectName": "Název projektu",
+    "projectLocked": "Úkol zůstává v projektu, ve kterém byl vytvořen.",
+    "dueDate": "Termín",
+    "status": "Stav",
+    "description": "Popis",
+    "confirmDelete": "Klikněte znovu pro smazání"
+  },
+  "projects": {
+    "title": "Moje projekty",
+    "addTask": "Přidat úkol",
+    "progress": "Hotovo {{done}} z {{total}}",
+    "empty": "Zatím žádné projekty. Vytvořte projekt spolu s prvním úkolem v kalendáři."
   }
 }

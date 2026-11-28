@@ -2,7 +2,6 @@
   "nav": {
     "dashboard": "Dashboard",
     "tasks": "My tasks",
-    "team": "Team",
     "calendar": "Calendar",
     "settings": "Settings",
     "logout": "Log out"
@@ -44,10 +43,9 @@
     "totalTasks": "Total tasks"
   },
   "activity": {
-    "title": "Weekly activity",
-    "subtitle": "Tasks created and completed",
-    "created": "Created",
-    "completed": "Completed"
+    "title": "Week ahead",
+    "subtitle": "Tasks due in the next 7 days, by status",
+    "overdue": "Overdue"
   },
   "statusChart": {
     "title": "Statuses",
@@ -58,12 +56,7 @@
     "title": "Upcoming deadlines",
     "allTasks": "All tasks",
     "due": "due {{date}}",
-    "empty": "No tasks with a deadline 🎉"
-  },
-  "team": {
-    "title": "Team",
-    "all": "All",
-    "comingSoon": "Members, roles and workload — coming soon"
+    "empty": "No tasks with a deadline"
   },
   "tasks": {
     "title": "My tasks",
@@ -73,23 +66,19 @@
     "progressFooter": "{{done}} of {{total}} tasks completed",
     "filterAll": "All",
     "noDueDate": "No due date",
-    "priorityHigh": "High",
-    "empty": "No tasks in this category yet"
+    "empty": "No tasks in this category yet",
+    "changeStatus": "Change status",
+    "overdue": "overdue · {{date}}"
   },
   "calendar": {
     "title": "Calendar",
     "deadlinesThisMonth": "Deadlines this month",
-    "meetingsPlanned": "Meetings planned",
     "addTitle": "Add title",
-    "event": "Event",
-    "task": "Task",
-    "allDay": "All day or selected time",
     "addDescription": "Add description…",
-    "moreOptions": "More options",
     "delete": "Delete",
     "save": "Save",
     "close": "Close",
-    "confirmDelete": "Are you sure you want to delete this event?"
+    "overdue": "Overdue"
   },
   "settings": {
     "title": "Settings",
@@ -100,5 +89,27 @@
     "theme": "Theme",
     "language": "Language",
     "languageHint": "Choose the interface language."
+  },
+  "common": {
+    "loadError": "Couldn't load your tasks. Check that the server is running and reload the page."
+  },
+  "taskDialog": {
+    "newTitle": "New task",
+    "editTitle": "Edit task",
+    "name": "Title",
+    "project": "Project",
+    "newProject": "+ New project…",
+    "newProjectName": "Project name",
+    "projectLocked": "A task stays in the project it was created in.",
+    "dueDate": "Due date",
+    "status": "Status",
+    "description": "Description",
+    "confirmDelete": "Click again to delete"
+  },
+  "projects": {
+    "title": "My projects",
+    "addTask": "Add task",
+    "progress": "{{done}} of {{total}} tasks done",
+    "empty": "No projects yet. Create one together with your first task in the calendar."
   }
 }

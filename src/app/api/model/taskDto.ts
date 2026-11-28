@@ -12,6 +12,7 @@
 export interface TaskDto { 
     id?: number;
     assigneeId?: number;
+    projectId?: number;
     name: string;
     description?: string;
     dueDate?: string;

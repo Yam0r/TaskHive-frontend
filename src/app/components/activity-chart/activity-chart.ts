@@ -1,102 +1,109 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { ChartConfiguration } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { ThemeService } from '../../core/theme/theme.service';
-import { LanguageService } from '../../core/i18n/language.service';
 
+import { TaskDto } from '../../api/model/taskDto';
+import { LanguageService } from '../../core/i18n/language.service';
+import { isOverdue, TASK_STATUSES, TaskStore, todayIso } from '../../core/tasks/task-store.service';
+import { ThemeService } from '../../core/theme/theme.service';
+
+const STATUS_TOKENS = {
+  NOT_STARTED: '--color-accent',
+  IN_PROGRESS: '--color-info',
+  COMPLETED: '--color-success',
+} as const;
+
+/**
+ * The week ahead: tasks due on each of the next 7 days, stacked by status,
+ * plus one "overdue" column. Built only from due dates, which the backend has
+ * today; a real created/completed activity chart needs timestamps on the backend.
+ */
 @Component({
   selector: 'app-activity-chart',
-  standalone: true,
-  imports: [
-    BaseChartDirective,
-    TranslocoPipe,
-  ],
+  imports: [BaseChartDirective, TranslocoPipe],
   templateUrl: './activity-chart.html',
-  styleUrl: './activity-chart.scss'
+  styleUrl: './activity-chart.scss',
 })
 export class ActivityChartComponent {
   private readonly themeService = inject(ThemeService);
   private readonly languageService = inject(LanguageService);
+  private readonly store = inject(TaskStore);
 
-  public barChartData: ChartConfiguration<'bar'>['data'] = { labels: [], datasets: [] };
-  public barChartOptions: ChartConfiguration<'bar'>['options'] = {};
+  /**
+   * computed(), not a field set in effect(): with zoneless change detection a
+   * plain field change doesn't re-render the template, a signal does.
+   * Re-runs when the theme (canvas can't read CSS variables), the language or the tasks change.
+   */
+  readonly chart = computed(() => {
+    this.themeService.theme();
+    this.languageService.language();
+    return this.build(this.store.tasks());
+  });
 
-  constructor() {
-    // Chart.js draws on a canvas and can't use CSS variables directly,
-    // so colors are re-read from the theme tokens whenever the theme changes.
-    // Labels are re-read when the language changes.
-    effect(() => {
-      this.themeService.theme();
-      this.languageService.language();
-      this.applyTheme();
-    });
-  }
-
-  private applyTheme(): void {
+  private build(tasks: TaskDto[]): {
+    data: ChartConfiguration<'bar'>['data'];
+    options: ChartConfiguration<'bar'>['options'];
+  } {
     const css = (name: string) => this.themeService.cssVar(name);
-    const muted = css('--color-text-muted');
     const t = (key: string) => this.languageService.translate(key);
+    const muted = css('--color-text-muted');
+    const days = this.nextSevenDays();
 
-    this.barChartData = {
-      labels: this.weekdayLabels(),
-      datasets: [
-        {
-          data: [3, 5, 2, 7, 4, 1, 0],
-          label: t('activity.created'),
-          backgroundColor: css('--color-accent'),
-          borderRadius: 4,
-          barPercentage: 0.6,
-          categoryPercentage: 0.8
-        },
-        {
-          data: [2, 4, 1, 5, 6, 2, 1],
-          label: t('activity.completed'),
-          backgroundColor: css('--color-success'),
-          borderRadius: 4,
-          barPercentage: 0.6,
-          categoryPercentage: 0.8
-        }
-      ]
+    const data: ChartConfiguration<'bar'>['data'] = {
+      labels: [t('activity.overdue'), ...days.map((d) => d.label)],
+      datasets: TASK_STATUSES.map((status) => ({
+        label: t('status.' + status),
+        data: [
+          // Overdue column: only open tasks can be overdue
+          tasks.filter((task) => task.status === status && isOverdue(task)).length,
+          ...days.map((d) => tasks.filter((task) => task.status === status && task.dueDate === d.iso).length),
+        ],
+        backgroundColor: css(STATUS_TOKENS[status]),
+        borderRadius: 4,
+        barPercentage: 0.6,
+        categoryPercentage: 0.8,
+        maxBarThickness: 36,
+      })),
     };
 
-    this.barChartOptions = {
+    const options: ChartConfiguration<'bar'>['options'] = {
       responsive: true,
       maintainAspectRatio: false,
       scales: {
-        x: {
-          grid: { display: false },
-          ticks: { color: muted }
-        },
+        x: { stacked: true, grid: { display: false }, ticks: { color: muted } },
         y: {
+          stacked: true,
+          beginAtZero: true,
           grid: { color: css('--color-border') },
-          ticks: { color: muted, stepSize: 2 }
-        }
+          ticks: { color: muted, precision: 0 },
+        },
       },
       plugins: {
         legend: {
           position: 'top',
           align: 'end',
-          labels: {
-            color: muted,
-            usePointStyle: true,
-            boxWidth: 8
-          }
+          labels: { color: muted, usePointStyle: true, boxWidth: 8 },
         },
         tooltip: {
           backgroundColor: css('--color-surface-active'),
           titleColor: css('--color-text'),
           bodyColor: css('--color-text'),
-          cornerRadius: 8
-        }
-      }
+          cornerRadius: 8,
+        },
+      },
     };
+    return { data, options };
   }
 
-  /** Short weekday names Mon..Sun in the current language (from Intl, no translation files needed). */
-  private weekdayLabels(): string[] {
-    const format = new Intl.DateTimeFormat(this.languageService.locale(), { weekday: 'short' });
-    // 2024-01-01 was a Monday
-    return Array.from({ length: 7 }, (_, i) => format.format(new Date(2024, 0, 1 + i)));
+  /** Today and the 6 following days: ISO date for matching, short label for the axis. */
+  private nextSevenDays(): { iso: string; label: string }[] {
+    const format = new Intl.DateTimeFormat(this.languageService.locale(), { weekday: 'short', day: 'numeric' });
+    const [y, m, d] = todayIso().split('-').map(Number);
+    return Array.from({ length: 7 }, (_, i) => {
+      const date = new Date(y, m - 1, d + i);
+      const iso = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+      return { iso, label: format.format(date) };
+    });
   }
 }

@@ -7,8 +7,8 @@
 
 <div class="chart-container">
   <canvas baseChart
-    [data]="barChartData"
-    [options]="barChartOptions"
+    [data]="chart().data"
+    [options]="chart().options"
     [type]="'bar'">
   </canvas>
 </div>

@@ -1,244 +1,126 @@
-import { ChangeDetectorRef, Component, effect, inject } from '@angular/core';
-import { SidebarComponent } from '../../components/sidebar/sidebar';
-import { HeaderComponent } from '../../components/header/header';
-import { DatePipe } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-
-import { FullCalendarModule, CalendarOptions } from '@fullcalendar/angular';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { TranslocoPipe } from '@jsverse/transloco';
+import { CalendarOptions, FullCalendarModule } from '@fullcalendar/angular';
 import themePlugin from '@fullcalendar/angular/themes/monarch';
-import timeGridPlugin from '@fullcalendar/angular/timegrid';
 import interactionPlugin from '@fullcalendar/angular/interaction';
 import dayGridPlugin from '@fullcalendar/angular/daygrid';
+// Imported from 'fullcalendar' directly: the locales/* export of @fullcalendar/angular 7.1.5 is broken.
 import csLocale from 'fullcalendar/locales/cs';
 import ruLocale from 'fullcalendar/locales/ru';
-import { TranslocoPipe } from '@jsverse/transloco';
-import { Language, LanguageService } from '../../core/i18n/language.service';
 
-// English is FullCalendar's built-in default.
-// Imported from 'fullcalendar' directly: the locales/* export of @fullcalendar/angular 7.1.5 is broken.
+import { HeaderComponent } from '../../components/header/header';
+import { TaskDialogComponent } from '../../components/task-dialog/task-dialog';
+import { TaskDto } from '../../api/model/taskDto';
+import { Language, LanguageService } from '../../core/i18n/language.service';
+import { isOverdue, TaskStore } from '../../core/tasks/task-store.service';
+import { ThemeService } from '../../core/theme/theme.service';
+
+// English is FullCalendar's built-in default
 const CALENDAR_LOCALES: Record<Language, string | typeof ruLocale> = {
   en: 'en',
   ru: ruLocale,
   cs: csLocale,
 };
 
-export interface CalendarEvent {
-  day: number;
-  time: string;
-  duration: number;
-  title: string;
-  color: string;
-}
+/** Task colour = status, red = overdue (CSS tokens, re-read on theme change). */
+const STATUS_TOKENS = {
+  NOT_STARTED: '--color-accent',
+  IN_PROGRESS: '--color-info',
+  COMPLETED: '--color-success',
+} as const;
 
 @Component({
   selector: 'app-calendar',
-  imports: [TranslocoPipe, SidebarComponent, HeaderComponent, DatePipe, FormsModule, FullCalendarModule],
+  imports: [TranslocoPipe, HeaderComponent, FullCalendarModule, TaskDialogComponent],
   templateUrl: './calendar.html',
   styleUrl: './calendar.scss',
 })
-export class CalendarComponent {
+export class CalendarComponent implements OnInit {
+  private readonly store = inject(TaskStore);
   private readonly languageService = inject(LanguageService);
-  readonly locale = this.languageService.locale;
+  private readonly themeService = inject(ThemeService);
 
-  constructor(private cdr: ChangeDetectorRef) {
-    // Month names, weekdays and toolbar buttons follow the UI language
-    effect(() => {
-      this.calendarOptions = {
-        ...this.calendarOptions,
-        locale: CALENDAR_LOCALES[this.languageService.language()],
-      };
-    });
-  }
+  /** First day of the month shown in the calendar, as yyyy-MM. */
+  private readonly visibleMonth = signal('');
 
-  calendarOptions: CalendarOptions = {
-    plugins: [themePlugin, timeGridPlugin, interactionPlugin, dayGridPlugin],
-    initialView: 'dayGridMonth',
-    slotDuration: '00:15:00',
-    headerToolbar: {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay',
-    },
-    allDaySlot: true,
-    height: 'auto',
-    selectable: true,
-    editable: true,
-    select: (info) => this.handleTimeSelect(info),
-    dateClick: (info) => this.handleDateClick(info),
-    eventClick: (info) => this.handleEventClick(info),
+  readonly deadlinesThisMonth = computed(
+    () => this.store.tasks().filter((t) => t.dueDate?.startsWith(this.visibleMonth())).length,
+  );
+  readonly overdue = computed(() => this.store.stats().overdue);
+  readonly loadError = this.store.error;
 
-    events: [
-      {
-        title: 'Разработать макет главной',
-        start: new Date().setHours(10, 0, 0, 0),
-        end: new Date().setHours(11, 30, 0, 0),
-        backgroundColor: '#ff4757',
-        borderColor: 'transparent',
-      },
-    ],
-  };
+  // Dialog state: a task to edit, or a date for a new task
+  readonly dialogOpen = signal(false);
+  readonly dialogTask = signal<TaskDto | null>(null);
+  readonly dialogDate = signal<string | null>(null);
 
-  selectedDay: number = 1;
-  activeTimeSlot: string | null = null;
-  timeSlots: string[] = ['8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00'];
-  events: CalendarEvent[] = [];
+  /** Rebuilt when tasks, language or theme change (computed, so the template always re-renders). */
+  readonly calendarOptions = computed<CalendarOptions>(() => {
+    const css = (name: string) => this.themeService.cssVar(name);
+    this.themeService.theme();
 
-  readonly PIXELS_PER_MINUTE = 1;
-  selectedDuration: number = 60;
-  newEventTitle: string = '';
-  newEventDescription: string = '';
-  selectedColor: string = 'purple';
-  availableColors: string[] = ['purple', 'blue', 'green', 'yellow', 'red'];
-  isModalOpen: boolean = false;
-  isEditMode: boolean = false;
-  selectedEventApi: any = null;
-  selectedStartStr: string = '';
-  selectedEndStr: string = '';
-
-  private openModalForm() {
-    this.newEventTitle = '';
-    this.newEventDescription = '';
-    this.selectedColor = 'purple';
-    this.isModalOpen = true;
-    this.cdr.detectChanges();
-    this.isEditMode = false;
-    this.selectedEventApi = null;
-  }
-
-  handleEventClick(info: any) {
-    this.isEditMode = true;
-    this.selectedEventApi = info.event;
-    this.newEventTitle = info.event.title;
-    this.selectedColor = info.event.extendedProps?.colorName || 'purple';
-    this.newEventDescription = info.event.extendedProps?.description || '';
-
-    this.isModalOpen = true;
-    this.cdr.detectChanges();
-  }
-
-  updateEvent() {
-    if (!this.newEventTitle.trim() || !this.selectedEventApi) return;
-
-    this.selectedEventApi.setProp('title', this.newEventTitle);
-    this.selectedEventApi.setProp('backgroundColor', this.getColorHex(this.selectedColor));
-    this.selectedEventApi.setExtendedProp('colorName', this.selectedColor);
-    this.selectedEventApi.setExtendedProp('description', this.newEventDescription);
-
-    this.closeModal();
-  }
-
-  handleDateClick(info: any) {
-    this.selectedStartStr = info.dateStr;
-    this.selectedEndStr = info.dateStr;
-    this.openModalForm();
-  }
-
-  openEmptyModal() {
-    const today = new Date();
-    this.selectedStartStr = today.toISOString().split('T')[0];
-    this.selectedEndStr = this.selectedStartStr;
-    this.openModalForm();
-  }
-
-  handleTimeSelect(info: any) {
-    this.selectedStartStr = info.startStr;
-    this.selectedEndStr = info.endStr;
-    this.openModalForm();
-    
-
-    this.newEventTitle = '';
-    this.selectedColor = 'purple';
-    this.isModalOpen = true;
-    info.view.calendar.unselect();
-  }
-
-  closeModal() {
-    this.isModalOpen = false;
-  }
-
-  selectDay(day: number) {
-    this.selectedDay = day;
-    this.activeTimeSlot = null;
-  }
-
-  openEventForm(time: string): void {
-    this.activeTimeSlot = time;
-    this.selectedColor = 'purple';
-    this.newEventTitle = '';
-    this.selectedDuration = 60;
-  }
-
-  closeEventForm(event?: Event): void {
-    if (event) {
-      event.stopPropagation();
-    }
-    this.activeTimeSlot = null;
-  }
-
-  selectColor(color: string) {
-    this.selectedColor = color;
-  }
-
-  addEvent() {
-    if (!this.newEventTitle.trim()) {
-      return;
-    }
-
-    const newEvent = {
-      title: this.newEventTitle,
-      start: this.selectedStartStr,
-      end: this.selectedEndStr,
-      backgroundColor: this.getColorHex(this.selectedColor),
-      borderColor: 'transparent',
-      extendedProps: { 
-        colorName: this.selectedColor,
-        description: this.newEventDescription,
-      
-      },
+    return {
+      plugins: [themePlugin, interactionPlugin, dayGridPlugin],
+      initialView: 'dayGridMonth',
+      locale: CALENDAR_LOCALES[this.languageService.language()],
+      firstDay: 1,
+      headerToolbar: { left: 'prev,next today', center: 'title', right: 'dayGridMonth,dayGridWeek' },
+      height: 'auto',
+      editable: true, // drag a task to another day = change its due date
+      eventDurationEditable: false,
+      dayMaxEvents: 3,
+      events: this.store
+        .tasks()
+        .filter((t) => t.dueDate)
+        .map((t) => {
+          const color = css(isOverdue(t) ? '--color-danger' : STATUS_TOKENS[t.status ?? 'NOT_STARTED']);
+          return {
+            id: String(t.id),
+            title: t.name,
+            start: t.dueDate,
+            allDay: true,
+            color, // FullCalendar 7: `color` replaces backgroundColor/borderColor
+            contrastColor: css('--color-on-accent'),
+            className: t.status === 'COMPLETED' ? 'task-done' : '',
+          };
+        }),
+      dateClick: (info) => this.openCreate(info.dateStr),
+      eventClick: (info) => this.openEdit(Number(info.event.id)),
+      eventDrop: (info) => this.moveTask(Number(info.event.id), info.event.startStr, info.revert),
+      datesSet: (info) => this.visibleMonth.set(this.monthOf(info.view.currentStart)),
     };
+  });
 
-    const currentEvents = (this.calendarOptions.events as any[]) || [];
-    this.calendarOptions.events = [...currentEvents, newEvent];
-
-    this.closeModal();
+  ngOnInit(): void {
+    this.store.load();
   }
 
-  getColorHex(colorName: string): string {
-    const colors: Record<string, string> = {
-      purple: '#8e54e9',
-      blue: '#00B8D9',
-      green: '#22c55e',
-      yellow: '#ffab00',
-      red: '#ff4757',
-    };
-    return colors[colorName] || '#8e54e9';
+  openCreate(date: string | null = null): void {
+    this.dialogTask.set(null);
+    this.dialogDate.set(date);
+    this.dialogOpen.set(true);
   }
 
-  deleteEvent(): void {
-    if (this.selectedEventApi) {
-      if (confirm(this.languageService.translate('calendar.confirmDelete'))) {
-        this.selectedEventApi.remove();
-        this.closeModal();
-      }
+  openEdit(id: number): void {
+    const task = this.store.tasks().find((t) => t.id === id);
+    if (!task) return;
+    this.dialogTask.set(task);
+    this.dialogOpen.set(true);
+  }
+
+  closeDialog(): void {
+    this.dialogOpen.set(false);
+  }
+
+  private async moveTask(id: number, dueDate: string, revert: () => void): Promise<void> {
+    try {
+      await this.store.updateTask(id, { dueDate: dueDate.slice(0, 10) });
+    } catch {
+      revert(); // the server refused, put the task back where it was
     }
   }
 
-  getEventTopPosition(timeString: string): number {
-    const [hours, minutes] = timeString.split(':').map(Number);
-    const startHour = 8;
-    const totalMinutes = (hours - startHour) * 60 + minutes;
-    return totalMinutes * this.PIXELS_PER_MINUTE;
-  }
-
-  getEventHeight(durationInMinutes: number): number {
-    return durationInMinutes * this.PIXELS_PER_MINUTE;
-  }
-
-  getEventsForDay(day: number): CalendarEvent[] {
-    return this.events.filter((e) => e.day === day);
-  }
-
-  getEventsForTime(day: number, time: string): CalendarEvent[] {
-    return this.events.filter((e) => e.day === day && e.time === time);
+  private monthOf(date: Date): string {
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
   }
 }
