@@ -1,27 +1,27 @@
 <mat-form-field class="example-full-width">
-  <mat-label>{{label}}</mat-label>
+  <mat-label>{{ label }}</mat-label>
 
-  <input 
-    matInput 
-    [type]="type"    
-    [formControl]="control" 
+  <input
+    matInput
+    [type]="type"
+    [formControl]="control"
     [errorStateMatcher]="matcher"
   >
-  
+
   @if (required) {
-    <mat-hint>Required field</mat-hint>
+    <mat-hint>{{ 'form.requiredHint' | transloco }}</mat-hint>
   }
 
   @if (control.hasError('required')) {
-    <mat-error><strong>{{ label }}</strong> field is required</mat-error>
+    <mat-error>{{ 'form.required' | transloco: { field: label } }}</mat-error>
   }
   @if (control.hasError('email') && !control.hasError('required')) {
-    <mat-error>Enter a correct email address</mat-error>
+    <mat-error>{{ 'form.email' | transloco }}</mat-error>
   }
   @if (control.hasError('minlength') && !control.hasError('required')) {
-    <mat-error><strong>{{ label }}</strong> must contain at least {{ control.getError('minlength').requiredLength }} characters</mat-error>
+    <mat-error>{{ 'form.minlength' | transloco: { field: label, length: control.getError('minlength').requiredLength } }}</mat-error>
   }
   @if (control.hasError('maxlength')) {
-    <mat-error><strong>{{ label }}</strong> must be at most {{ control.getError('maxlength').requiredLength }} characters</mat-error>
+    <mat-error>{{ 'form.maxlength' | transloco: { field: label, length: control.getError('maxlength').requiredLength } }}</mat-error>
   }
 </mat-form-field>

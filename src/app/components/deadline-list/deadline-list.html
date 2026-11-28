@@ -1,6 +1,6 @@
 <div class="list-header">
-  <h3 class="list-title">Ближайшие дедлайны</h3>
-  <a routerLink="/tasks" class="list-link">Все задачи &rarr;</a>
+  <h3 class="list-title">{{ 'deadlines.title' | transloco }}</h3>
+  <a routerLink="/tasks" class="list-link">{{ 'deadlines.allTasks' | transloco }} &rarr;</a>
 </div>
 
 <div class="list-content">
@@ -9,13 +9,19 @@
       <div class="dot" [class.active]="task.status === 'IN_PROGRESS'"></div>
       <div class="task-info">
         <span class="task-name">{{ task.name }}</span>
-        <span class="task-category">{{ task.description }}</span>
+        @if (projectName(task); as project) {
+          <span class="task-category">{{ project }}</span>
+        }
       </div>
       <span class="task-date" [class.overdue]="isOverdue(task)">
-        до {{ task.dueDate | date: 'dd.MM' }}
+        @if (isOverdue(task)) {
+          {{ 'tasks.overdue' | transloco: { date: (task.dueDate | date: 'd MMM' : undefined : locale()) } }}
+        } @else {
+          {{ 'deadlines.due' | transloco: { date: (task.dueDate | date: 'd MMM' : undefined : locale()) } }}
+        }
       </span>
     </div>
   } @empty {
-    <p class="task-category">Нет задач с дедлайном 🎉</p>
+    <p class="task-category">{{ 'deadlines.empty' | transloco }}</p>
   }
 </div>

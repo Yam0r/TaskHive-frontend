@@ -15,6 +15,8 @@ import { InputErrorStateMatcherExample } from '../../components/custom-input/cus
 import { AuthenticationService } from '../../api/api/authentication.service';
 import { UserRegistrationRequestDto } from '../../api/model/userRegistrationRequestDto';
 import { TokenService } from '../../core/auth/token.service';
+import { LanguageService } from '../../core/i18n/language.service';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 /** Cross-field validator: password and repeatPassword must be equal. */
 const passwordsMatch: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
@@ -25,7 +27,7 @@ const passwordsMatch: ValidatorFn = (group: AbstractControl): ValidationErrors |
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, InputErrorStateMatcherExample],
+  imports: [TranslocoPipe, ReactiveFormsModule, InputErrorStateMatcherExample],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
@@ -34,6 +36,7 @@ export class LoginComponent {
   private authService = inject(AuthenticationService);
   private router = inject(Router);
   private tokenService = inject(TokenService);
+  private languageService = inject(LanguageService);
 
   currentView: 'menu' | 'login' | 'register' = 'menu';
   errorMessages = signal<string[]>([]);
@@ -122,7 +125,7 @@ export class LoginComponent {
   private finishAuth(token: string | undefined) {
     this.loading.set(false);
     if (!token) {
-      this.errorMessages.set(['Unexpected server response. Please try again.']);
+      this.errorMessages.set([this.t('auth.errors.unexpected')]);
       return;
     }
     this.tokenService.set(token);
@@ -134,15 +137,19 @@ export class LoginComponent {
     this.loading.set(false);
 
     if (err.status === 0) {
-      this.errorMessages.set(['Server is unavailable. Please try again later.']);
+      this.errorMessages.set([this.t('auth.errors.serverUnavailable')]);
     } else if (err.status === 401) {
-      this.errorMessages.set(['Invalid email or password.']);
+      this.errorMessages.set([this.t('auth.errors.invalidCredentials')]);
     } else if (Array.isArray(err.error?.errors)) {
       this.errorMessages.set(err.error.errors); // 400: {"errors": [...]}
     } else if (typeof err.error?.error === 'string') {
       this.errorMessages.set([err.error.error]); // 409 etc.: {"error": "..."}
     } else {
-      this.errorMessages.set(['Something went wrong. Please try again.']);
+      this.errorMessages.set([this.t('auth.errors.generic')]);
     }
+  }
+
+  private t(key: string): string {
+    return this.languageService.translate(key);
   }
 }

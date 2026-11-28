@@ -1,0 +1,116 @@
+{
+  "nav": {
+    "dashboard": "Přehled",
+    "tasks": "Moje úkoly",
+    "calendar": "Kalendář",
+    "settings": "Nastavení",
+    "logout": "Odhlásit se"
+  },
+  "status": {
+    "NOT_STARTED": "K řešení",
+    "IN_PROGRESS": "Probíhá",
+    "COMPLETED": "Hotovo"
+  },
+  "auth": {
+    "login": "Přihlásit se",
+    "register": "Registrace",
+    "cancel": "Zrušit",
+    "signingIn": "Přihlašování…",
+    "creatingAccount": "Vytváření účtu…",
+    "email": "E-mail",
+    "password": "Heslo",
+    "repeatPassword": "Zopakujte heslo",
+    "username": "Uživatelské jméno",
+    "firstName": "Jméno",
+    "lastName": "Příjmení",
+    "passwordsMismatch": "Hesla se neshodují.",
+    "errors": {
+      "invalidCredentials": "Neplatný e-mail nebo heslo.",
+      "serverUnavailable": "Server je nedostupný. Zkuste to prosím později.",
+      "unexpected": "Neočekávaná odpověď serveru. Zkuste to prosím znovu.",
+      "generic": "Něco se pokazilo. Zkuste to prosím znovu."
+    }
+  },
+  "form": {
+    "requiredHint": "Povinné pole",
+    "required": "Pole „{{field}}“ je povinné",
+    "email": "Zadejte platný e-mail",
+    "minlength": "„{{field}}“: alespoň {{length}} znaků",
+    "maxlength": "„{{field}}“: nejvýše {{length}} znaků"
+  },
+  "dashboard": {
+    "title": "Přehled",
+    "totalTasks": "Úkolů celkem"
+  },
+  "activity": {
+    "title": "Týden dopředu",
+    "subtitle": "Úkoly s termínem v příštích 7 dnech podle stavu",
+    "overdue": "Po termínu"
+  },
+  "statusChart": {
+    "title": "Stavy",
+    "subtitle": "Rozložení úkolů",
+    "done": "hotovo"
+  },
+  "deadlines": {
+    "title": "Nejbližší termíny",
+    "allTasks": "Všechny úkoly",
+    "due": "do {{date}}",
+    "empty": "Žádné úkoly s termínem"
+  },
+  "tasks": {
+    "title": "Moje úkoly",
+    "newTask": "+ Nový úkol",
+    "total": "Celkem",
+    "progress": "Celkový postup",
+    "progressFooter": "Dokončeno {{done}} z {{total}} úkolů",
+    "filterAll": "Vše",
+    "noDueDate": "Bez termínu",
+    "empty": "V této kategorii zatím nejsou žádné úkoly",
+    "changeStatus": "Změnit stav",
+    "overdue": "po termínu · {{date}}"
+  },
+  "calendar": {
+    "title": "Kalendář",
+    "deadlinesThisMonth": "Termíny v měsíci",
+    "addTitle": "Přidejte název",
+    "addDescription": "Přidejte popis…",
+    "delete": "Smazat",
+    "save": "Uložit",
+    "close": "Zavřít",
+    "overdue": "Po termínu",
+    "hint": "Kliknutím na den přidáte úkol. Přetažením úkolu na jiný den změníte termín."
+  },
+  "settings": {
+    "title": "Nastavení",
+    "appearance": "Vzhled",
+    "appearanceHint": "Vyberte, jak bude TaskHive na tomto zařízení vypadat.",
+    "dark": "Tmavý",
+    "light": "Světlý",
+    "theme": "Motiv",
+    "language": "Jazyk",
+    "languageHint": "Vyberte jazyk rozhraní."
+  },
+  "common": {
+    "loadError": "Úkoly se nepodařilo načíst. Zkontrolujte, že server běží, a obnovte stránku."
+  },
+  "taskDialog": {
+    "newTitle": "Nový úkol",
+    "editTitle": "Upravit úkol",
+    "name": "Název",
+    "project": "Projekt",
+    "newProject": "+ Nový projekt…",
+    "newProjectName": "Název projektu",
+    "projectLocked": "Úkol zůstává v projektu, ve kterém byl vytvořen.",
+    "dueDate": "Termín",
+    "status": "Stav",
+    "description": "Popis",
+    "confirmDelete": "Klikněte znovu pro smazání"
+  },
+  "projects": {
+    "title": "Moje projekty",
+    "addTask": "Přidat úkol",
+    "progress": "Hotovo {{done}} z {{total}}",
+    "empty": "Zatím žádné projekty. Vytvořte projekt spolu s prvním úkolem v kalendáři."
+  }
+}

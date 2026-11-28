@@ -1,0 +1,115 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "tasks": "My tasks",
+    "calendar": "Calendar",
+    "settings": "Settings",
+    "logout": "Log out"
+  },
+  "status": {
+    "NOT_STARTED": "To do",
+    "IN_PROGRESS": "In progress",
+    "COMPLETED": "Done"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "cancel": "Cancel",
+    "signingIn": "Signing in…",
+    "creatingAccount": "Creating account…",
+    "email": "Email",
+    "password": "Password",
+    "repeatPassword": "Repeat password",
+    "username": "Username",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "passwordsMismatch": "Passwords do not match.",
+    "errors": {
+      "invalidCredentials": "Invalid email or password.",
+      "serverUnavailable": "Server is unavailable. Please try again later.",
+      "unexpected": "Unexpected server response. Please try again.",
+      "generic": "Something went wrong. Please try again."
+    }
+  },
+  "form": {
+    "requiredHint": "Required field",
+    "required": "{{field}} is required",
+    "email": "Enter a valid email address",
+    "minlength": "{{field}} must contain at least {{length}} characters",
+    "maxlength": "{{field}} must be at most {{length}} characters"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "totalTasks": "Total tasks"
+  },
+  "activity": {
+    "title": "Week ahead",
+    "subtitle": "Tasks due in the next 7 days, by status",
+    "overdue": "Overdue"
+  },
+  "statusChart": {
+    "title": "Statuses",
+    "subtitle": "Task distribution",
+    "done": "done"
+  },
+  "deadlines": {
+    "title": "Upcoming deadlines",
+    "allTasks": "All tasks",
+    "due": "due {{date}}",
+    "empty": "No tasks with a deadline"
+  },
+  "tasks": {
+    "title": "My tasks",
+    "newTask": "+ New task",
+    "total": "Total",
+    "progress": "Overall progress",
+    "progressFooter": "{{done}} of {{total}} tasks completed",
+    "filterAll": "All",
+    "noDueDate": "No due date",
+    "empty": "No tasks in this category yet",
+    "changeStatus": "Change status",
+    "overdue": "overdue · {{date}}"
+  },
+  "calendar": {
+    "title": "Calendar",
+    "deadlinesThisMonth": "Deadlines this month",
+    "addTitle": "Add title",
+    "addDescription": "Add description…",
+    "delete": "Delete",
+    "save": "Save",
+    "close": "Close",
+    "overdue": "Overdue"
+  },
+  "settings": {
+    "title": "Settings",
+    "appearance": "Appearance",
+    "appearanceHint": "Choose how TaskHive looks on this device.",
+    "dark": "Dark",
+    "light": "Light",
+    "theme": "Theme",
+    "language": "Language",
+    "languageHint": "Choose the interface language."
+  },
+  "common": {
+    "loadError": "Couldn't load your tasks. Check that the server is running and reload the page."
+  },
+  "taskDialog": {
+    "newTitle": "New task",
+    "editTitle": "Edit task",
+    "name": "Title",
+    "project": "Project",
+    "newProject": "+ New project…",
+    "newProjectName": "Project name",
+    "projectLocked": "A task stays in the project it was created in.",
+    "dueDate": "Due date",
+    "status": "Status",
+    "description": "Description",
+    "confirmDelete": "Click again to delete"
+  },
+  "projects": {
+    "title": "My projects",
+    "addTask": "Add task",
+    "progress": "{{done}} of {{total}} tasks done",
+    "empty": "No projects yet. Create one together with your first task in the calendar."
+  }
+}

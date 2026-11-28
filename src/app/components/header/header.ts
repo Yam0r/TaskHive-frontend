@@ -1,4 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, computed, inject, Input } from '@angular/core';
+
+import { LanguageService } from '../../core/i18n/language.service';
 
 @Component({
   selector: 'app-header',
@@ -7,30 +9,19 @@ import { Component, Input, OnInit } from '@angular/core';
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
-export class HeaderComponent implements OnInit{
-  @Input() title: string = 'Dashboard';
+export class HeaderComponent {
+  private readonly languageService = inject(LanguageService);
 
-  formattedDate: string = '';
+  @Input() title = '';
 
-  
-  ngOnInit() {
-    this.setFormattedDate();
-  }
-
-  private setFormattedDate(){
-    const date = new Date();
-    const userLocale = navigator.language;
-
-    const options: Intl.DateTimeFormatOptions = {
-      weekday:'long',
-      day:'numeric',
+  /** Today's date in the current UI language, e.g. "Saturday, November 21, 2026". */
+  readonly formattedDate = computed(() => {
+    const date = new Intl.DateTimeFormat(this.languageService.locale(), {
+      weekday: 'long',
+      day: 'numeric',
       month: 'long',
       year: 'numeric',
-    };
-
-    let dateStr = new Intl.DateTimeFormat('en-US', options).format(date);
-    dateStr = dateStr.replace(/\s*г\.$/, '');
-    this.formattedDate = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
-    
-  }
+    }).format(new Date());
+    return date.charAt(0).toUpperCase() + date.slice(1);
+  });
 }

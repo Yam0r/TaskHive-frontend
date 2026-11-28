@@ -10,6 +10,7 @@ import {
 import {ErrorStateMatcher} from '@angular/material/core';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -24,7 +25,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   selector: 'input-error-state-matcher-example',
   templateUrl: './custom-input.html',
   styleUrl: './custom-input.scss',
-  imports: [FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule],
+  imports: [TranslocoPipe, FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule],
 })
 export class InputErrorStateMatcherExample {
   matcher = new MyErrorStateMatcher();

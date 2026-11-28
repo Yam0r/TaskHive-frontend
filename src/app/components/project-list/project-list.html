@@ -1,0 +1,28 @@
+<div class="list-header">
+  <h3 class="list-title">{{ 'projects.title' | transloco }}</h3>
+  <a routerLink="/calendar" class="list-link">{{ 'projects.addTask' | transloco }} &rarr;</a>
+</div>
+
+<div class="list-content">
+  @for (item of projects(); track item.project.id) {
+    <div class="project-item">
+      <div class="project-row">
+        <span class="project-name">{{ item.project.name }}</span>
+        <span class="project-percent">{{ item.percent }}%</span>
+      </div>
+      <div
+        class="meter"
+        role="progressbar"
+        [attr.aria-valuenow]="item.percent"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        [attr.aria-label]="item.project.name"
+      >
+        <div class="meter-fill" [style.width.%]="item.percent"></div>
+      </div>
+      <span class="project-meta">{{ 'projects.progress' | transloco: { done: item.done, total: item.total } }}</span>
+    </div>
+  } @empty {
+    <p class="project-meta">{{ 'projects.empty' | transloco }}</p>
+  }
+</div>

@@ -4,49 +4,45 @@
     <span class="logo-text">TaskHive</span>
   </div>
 
-  @if (currentUser) {
+  @if (user(); as user) {
     <div class="user-profile">
-    <div class="avatar">{{ getInitials(currentUser.firstName, currentUser.lastName) }}</div>
-    <div class="user-info">
-      <span class="name">{{ currentUser.firstName }} {{ currentUser.lastName }}</span>
-      <span class="email">{{ currentUser.email }}</span>
+      <div class="avatar">{{ initials() }}</div>
+      <div class="user-info">
+        <span class="name">{{ displayName() }}</span>
+        <span class="email">{{ user.email }}</span>
+      </div>
     </div>
-  </div>
   }
-  
 
   <nav class="nav-menu">
     <a routerLink="/dashboard" class="nav-item" routerLinkActive="active">
       <mat-icon>dashboard</mat-icon>
-      <span>Дашборд</span>
+      <span>{{ 'nav.dashboard' | transloco }}</span>
     </a>
 
     <a routerLink="/tasks" class="nav-item" routerLinkActive="active">
       <mat-icon>list_alt</mat-icon>
-      <span>Мои задачи</span>
-      <span class="badge">0</span>
-    </a>
-
-    <a routerLink="/team" class="nav-item" routerLinkActive="active">
-      <mat-icon>people</mat-icon>
-      <span>Команда</span>
+      <span>{{ 'nav.tasks' | transloco }}</span>
+      @if (openTasks() > 0) {
+        <span class="badge">{{ openTasks() }}</span>
+      }
     </a>
 
     <a routerLink="/calendar" class="nav-item" routerLinkActive="active">
       <mat-icon>calendar_today</mat-icon>
-      <span>Календарь</span>
+      <span>{{ 'nav.calendar' | transloco }}</span>
     </a>
 
     <a routerLink="/settings" class="nav-item" routerLinkActive="active">
       <mat-icon>settings</mat-icon>
-      <span>Настройки</span>
+      <span>{{ 'nav.settings' | transloco }}</span>
     </a>
   </nav>
 
   <div class="spacer"></div>
 
-  <a class="nav-item logout" (click)="logout()">
+  <a class="nav-item logout" href="/login" (click)="$event.preventDefault(); logout()">
     <mat-icon>exit_to_app</mat-icon>
-    <span>Выйти</span>
+    <span>{{ 'nav.logout' | transloco }}</span>
   </a>
 </div>

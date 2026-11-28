@@ -1,59 +1,34 @@
 <main class="main-content">
-  <app-header></app-header>
+  <app-header [title]="'dashboard.title' | transloco"></app-header>
 
   <div class="dashboard-area">
+    @if (loadError()) {
+      <p class="load-error" role="alert">{{ 'common.loadError' | transloco }}</p>
+    }
+
     <div class="stats-grid">
-      <app-stat-card
-        title="Всего задач"
-        count="{{ stats.totalTasks || 0}}"
-        iconName="adjust"
-        colorType="primary"
-      >
-      </app-stat-card>
-
-      <app-stat-card
-        title="К выполнению"
-        count="{{ stats.notStartedTasks }}"
-        iconName="radio_button_unchecked"
-        colorType="warning"
-      >
-      </app-stat-card>
-
-      <app-stat-card
-        title="В процессе"
-        count="{{ stats.inProgressTasks }}"
-        iconName="tonality"
-        colorType="info"
-      >
-      </app-stat-card>
-
-      <app-stat-card
-        title="Выполнено"
-        count="{{ stats.completedTasks }}"
-        iconName="check_circle_outline"
-        colorType="success"
-      >
-      </app-stat-card>
+      <app-stat-card [title]="'dashboard.totalTasks' | transloco" [count]="stats().totalTasks ?? 0" iconName="adjust" colorType="primary"></app-stat-card>
+      <app-stat-card [title]="'status.NOT_STARTED' | transloco" [count]="stats().notStartedTasks ?? 0" iconName="radio_button_unchecked" colorType="warning"></app-stat-card>
+      <app-stat-card [title]="'status.IN_PROGRESS' | transloco" [count]="stats().inProgressTasks ?? 0" iconName="tonality" colorType="info"></app-stat-card>
+      <app-stat-card [title]="'status.COMPLETED' | transloco" [count]="stats().completedTasks ?? 0" iconName="check_circle_outline" colorType="success"></app-stat-card>
     </div>
 
     <div class="charts-section">
-      <div class="chart-card activity-chart">
+      <div class="card activity-chart">
         <app-activity-chart></app-activity-chart>
       </div>
-
-      <div class="chart-card status-chart">
-        <app-status-chart [stats]="stats"> </app-status-chart>
+      <div class="card status-chart">
+        <app-status-chart [stats]="stats()"></app-status-chart>
       </div>
     </div>
-  </div>
 
-  <div class="lists-section">
-    <div class="list-card deadlines-card">
-      <app-deadline-list></app-deadline-list>
-    </div>
-
-    <div class="list-card team-card">
-      <app-team-list></app-team-list>
+    <div class="lists-section">
+      <div class="card deadlines-card">
+        <app-deadline-list></app-deadline-list>
+      </div>
+      <div class="card projects-card">
+        <app-project-list></app-project-list>
+      </div>
     </div>
   </div>
 </main>

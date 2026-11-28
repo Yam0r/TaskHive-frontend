@@ -1,0 +1,116 @@
+{
+  "nav": {
+    "dashboard": "Дашборд",
+    "tasks": "Мои задачи",
+    "calendar": "Календарь",
+    "settings": "Настройки",
+    "logout": "Выйти"
+  },
+  "status": {
+    "NOT_STARTED": "К выполнению",
+    "IN_PROGRESS": "В процессе",
+    "COMPLETED": "Готово"
+  },
+  "auth": {
+    "login": "Войти",
+    "register": "Регистрация",
+    "cancel": "Отмена",
+    "signingIn": "Входим…",
+    "creatingAccount": "Создаём аккаунт…",
+    "email": "Email",
+    "password": "Пароль",
+    "repeatPassword": "Повторите пароль",
+    "username": "Имя пользователя",
+    "firstName": "Имя",
+    "lastName": "Фамилия",
+    "passwordsMismatch": "Пароли не совпадают.",
+    "errors": {
+      "invalidCredentials": "Неверный email или пароль.",
+      "serverUnavailable": "Сервер недоступен. Попробуйте позже.",
+      "unexpected": "Неожиданный ответ сервера. Попробуйте ещё раз.",
+      "generic": "Что-то пошло не так. Попробуйте ещё раз."
+    }
+  },
+  "form": {
+    "requiredHint": "Обязательное поле",
+    "required": "Поле «{{field}}» обязательно",
+    "email": "Введите корректный email",
+    "minlength": "«{{field}}»: минимум {{length}} символов",
+    "maxlength": "«{{field}}»: максимум {{length}} символов"
+  },
+  "dashboard": {
+    "title": "Дашборд",
+    "totalTasks": "Всего задач"
+  },
+  "activity": {
+    "title": "Неделя вперёд",
+    "subtitle": "Задачи со сроком в ближайшие 7 дней, по статусам",
+    "overdue": "Просрочено"
+  },
+  "statusChart": {
+    "title": "Статусы",
+    "subtitle": "Распределение задач",
+    "done": "готово"
+  },
+  "deadlines": {
+    "title": "Ближайшие дедлайны",
+    "allTasks": "Все задачи",
+    "due": "до {{date}}",
+    "empty": "Нет задач с дедлайном"
+  },
+  "tasks": {
+    "title": "Мои задачи",
+    "newTask": "+ Новая задача",
+    "total": "Всего",
+    "progress": "Общий прогресс",
+    "progressFooter": "{{done}} из {{total}} задач завершено",
+    "filterAll": "Все",
+    "noDueDate": "Без срока",
+    "empty": "Задач в этой категории пока нет",
+    "changeStatus": "Изменить статус",
+    "overdue": "просрочено · {{date}}"
+  },
+  "calendar": {
+    "title": "Календарь",
+    "deadlinesThisMonth": "Дедлайны в месяце",
+    "addTitle": "Добавьте название",
+    "addDescription": "Добавьте описание…",
+    "delete": "Удалить",
+    "save": "Сохранить",
+    "close": "Закрыть",
+    "overdue": "Просрочено",
+    "hint": "Кликните по дню, чтобы добавить задачу. Перетащите задачу на другой день, чтобы изменить срок."
+  },
+  "settings": {
+    "title": "Настройки",
+    "appearance": "Внешний вид",
+    "appearanceHint": "Выберите, как TaskHive выглядит на этом устройстве.",
+    "dark": "Тёмная",
+    "light": "Светлая",
+    "theme": "Тема",
+    "language": "Язык",
+    "languageHint": "Выберите язык интерфейса."
+  },
+  "common": {
+    "loadError": "Не удалось загрузить задачи. Проверьте, что сервер запущен, и обновите страницу."
+  },
+  "taskDialog": {
+    "newTitle": "Новая задача",
+    "editTitle": "Редактирование задачи",
+    "name": "Название",
+    "project": "Проект",
+    "newProject": "+ Новый проект…",
+    "newProjectName": "Название проекта",
+    "projectLocked": "Задача остаётся в проекте, в котором была создана.",
+    "dueDate": "Срок",
+    "status": "Статус",
+    "description": "Описание",
+    "confirmDelete": "Нажмите ещё раз для удаления"
+  },
+  "projects": {
+    "title": "Мои проекты",
+    "addTask": "Добавить задачу",
+    "progress": "Выполнено {{done}} из {{total}}",
+    "empty": "Проектов пока нет. Создайте проект вместе с первой задачей в календаре."
+  }
+}

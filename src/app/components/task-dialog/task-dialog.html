@@ -1,0 +1,91 @@
+<div class="overlay" (click)="close()">
+  <form
+    class="dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="task-dialog-title"
+    [formGroup]="form"
+    (ngSubmit)="save()"
+    (click)="$event.stopPropagation()"
+    novalidate
+  >
+    <header class="dialog-header">
+      <h2 id="task-dialog-title">{{ (isEdit ? 'taskDialog.editTitle' : 'taskDialog.newTitle') | transloco }}</h2>
+      <button type="button" class="icon-btn" [attr.aria-label]="'calendar.close' | transloco" (click)="close()">
+        <mat-icon aria-hidden="true">close</mat-icon>
+      </button>
+    </header>
+
+    <label class="field">
+      <span>{{ 'taskDialog.name' | transloco }}</span>
+      <input #nameInput formControlName="name" maxlength="255" [placeholder]="'calendar.addTitle' | transloco" />
+      @if (form.controls.name.touched && form.controls.name.hasError('required')) {
+        <small class="field-error">{{ 'form.required' | transloco: { field: ('taskDialog.name' | transloco) } }}</small>
+      }
+    </label>
+
+    <label class="field">
+      <span>{{ 'taskDialog.project' | transloco }}</span>
+      <select formControlName="projectId">
+        @for (project of projects(); track project.id) {
+          <option [ngValue]="project.id">{{ project.name }}</option>
+        }
+        @if (!isEdit) {
+          <option [ngValue]="NEW_PROJECT">{{ 'taskDialog.newProject' | transloco }}</option>
+        }
+      </select>
+      @if (isEdit) {
+        <small class="hint">{{ 'taskDialog.projectLocked' | transloco }}</small>
+      }
+    </label>
+
+    @if (creatingProject) {
+      <label class="field">
+        <span>{{ 'taskDialog.newProjectName' | transloco }}</span>
+        <input formControlName="newProjectName" maxlength="255" />
+        @if (form.controls.newProjectName.touched && form.controls.newProjectName.invalid) {
+          <small class="field-error">{{ 'form.required' | transloco: { field: ('taskDialog.newProjectName' | transloco) } }}</small>
+        }
+      </label>
+    }
+
+    <div class="field-row">
+      <label class="field">
+        <span>{{ 'taskDialog.dueDate' | transloco }}</span>
+        <input type="date" formControlName="dueDate" />
+        @if (form.controls.dueDate.touched && form.controls.dueDate.invalid) {
+          <small class="field-error">{{ 'form.required' | transloco: { field: ('taskDialog.dueDate' | transloco) } }}</small>
+        }
+      </label>
+
+      <label class="field">
+        <span>{{ 'taskDialog.status' | transloco }}</span>
+        <select formControlName="status">
+          @for (status of statuses; track status) {
+            <option [ngValue]="status">{{ 'status.' + status | transloco }}</option>
+          }
+        </select>
+      </label>
+    </div>
+
+    <label class="field">
+      <span>{{ 'taskDialog.description' | transloco }}</span>
+      <textarea formControlName="description" rows="3" maxlength="1000" [placeholder]="'calendar.addDescription' | transloco"></textarea>
+    </label>
+
+    @for (message of errors(); track message) {
+      <p class="form-error" role="alert">{{ message }}</p>
+    }
+
+    <footer class="dialog-actions">
+      @if (isEdit) {
+        <button type="button" class="btn-danger" [disabled]="saving()" (click)="remove()">
+          {{ (confirmDelete() ? 'taskDialog.confirmDelete' : 'calendar.delete') | transloco }}
+        </button>
+      }
+      <span class="spacer"></span>
+      <button type="button" class="btn-secondary" [disabled]="saving()" (click)="close()">{{ 'auth.cancel' | transloco }}</button>
+      <button type="submit" class="btn-primary" [disabled]="saving()">{{ 'calendar.save' | transloco }}</button>
+    </footer>
+  </form>
+</div>
